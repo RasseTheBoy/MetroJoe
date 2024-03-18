@@ -1,35 +1,36 @@
-#!/usr/bin/env python3
+import minimalmodbus
 
-import rospy
-from pymodbus.client.sync import ModbusTcpClient
+# Define the Modbus slave address and port
+SLAVE_ADDRESS = 1  # Replace with your Modbus slave address
+PORT = '/dev/ttyUSB0'  # Replace with your serial port
 
-def read_modbus_data():
-    rospy.init_node('modbus_reader', anonymous=True)
-    
-    # Replace 'localhost' and '502' with the IP address and port of your Modbus simulator
-    modbus_client = ModbusTcpClient('localhost', port=502)
-    
+# Create a minimalmodbus instrument instance
+instrument = minimalmodbus.Instrument(PORT, SLAVE_ADDRESS)
+
+# Optional: Set up the serial communication parameters
+instrument.serial.baudrate = 9600
+instrument.serial.bytesize = 8
+instrument.serial.parity = minimalmodbus.serial.PARITY_NONE
+instrument.serial.stopbits = 1
+instrument.serial.timeout = 0.05  # Timeout in seconds
+
+# Function to read a holding register
+def read_register(register_address):
     try:
-        # Specify the Modbus register address and the number of registers to read
-        # Replace 'address' and 'count' with appropriate values for your Modbus device
-        address = 0  # Address of the register to read
-        count = 1    # Number of registers to read
-        
-        # Read holding registers from the Modbus device
-        result = modbus_client.read_holding_registers(address, count, unit=1)
-        
-        # Check if the reading was successful
-        if result.isError():
-            rospy.logerr("Failed to read Modbus data: %s", result)
-        else:
-            # Print the read data
-            rospy.loginfo("Modbus data: %s", result.registers)
-    finally:
-        # Close the Modbus connection
-        modbus_client.close()
+        value = instrument.read_register(register_address, functioncode=3)
+        print(f"Value read from register {register_address}: {value}")
+    except Exception as e:
+        print(f"Error reading register {register_address}: {e}")
 
-if __name__ == '__main__':
+# Function to write to a holding register
+def write_register(register_address, value):
     try:
-        read_modbus_data()
-    except rospy.ROSInterruptException:
-        pass
+        instrument.write_register(register_address, value, functioncode=6)
+        print(f"Value {value} written to register {register_address}")
+    except Exception as e:
+        print(f"Error writing to register {register_address}: {e}")
+
+if __name__ == "__main__":
+    # Test read and write operations
+    read_register(0)  # Replace with your register address
+    write_register(1, 123)  # Replace with your register address and value
