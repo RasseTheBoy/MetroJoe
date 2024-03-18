@@ -1,6 +1,6 @@
 FROM ros:humble
 
-ARG ROS_PAKCAGE_NAME=new_package
+ARG ROS_PACKAGE_NAME=new_package
 
 # Set the user name and id
 ENV USERNAME=ros
@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     python3.10 \
     python3-pip \
+    libmodbus-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -39,5 +40,13 @@ COPY bashrc ${HOME}/.bashrc
 
 # Set the workspace as the working directory
 WORKDIR ${HOME}/ros_ws/src
+
+# Additional setup for USB communication with Modbus
+# You might need to adjust this according to your specific requirements
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-$ROS_DISTRO-rosbridge-server \
+    ros-$ROS_DISTRO-rosserial \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 CMD [ "bash" ]
