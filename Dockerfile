@@ -14,10 +14,12 @@ LABEL Name="${USERNAME}-$ROS_DISTRO-orin" \
 # Set HOME environment variable
 ENV HOME /home/${USERNAME}
 
-# Create a non-root user
+# Create a root user
 RUN groupadd --gid ${USER_GID} ${USERNAME} \
-    && useradd --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME} \
-    && mkdir ${HOME}/.config && chown ${USER_UID}:${USER_GID} ${HOME}/.config
+   && useradd --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME} \
+   && groupadd -f input \
+   && usermod -a -G input ${USERNAME} \
+   && mkdir ${HOME}/.config && chown ${USER_UID}:${USER_GID} ${HOME}/.config
 
 # Install basic tools, Python 3.10.XX, minimalmodbus, and ROS packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -29,12 +31,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libmodbus-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && pip3 install minimalmodbus \
-    && apt-get update && apt-get install -y --no-install-recommends \
-    ros-$ROS_DISTRO-rosbridge-server \
-    ros-$ROS_DISTRO-rosserial \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && pip3 install minimalmodbus FastDebugger evdev setuptools==58.2.0
+# setuptools==58.2.0 is the latest version to work with ros2 python packages without any warnings
 
 # Set up sudo for the user
 RUN echo "${USERNAME} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} \
@@ -43,8 +41,11 @@ RUN echo "${USERNAME} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} \
 # Copy the bashrc scripts to the container
 COPY bashrc ${HOME}/.bashrc
 
-# Set the workspace as the working directory
-WORKDIR ${HOME}/ros_ws/src
+# Create a mount directory (mainly for testing)
+ENV ROS2_MOUNT_DIR_PATH /ros2_ws
+RUN mkdir -p ${ROS2_MOUNT_DIR_PATH} && chown -R ${USER_UID}:${USER_GID} ${ROS2_MOUNT_DIR_PATH}
+WORKDIR ${ROS2_MOUNT_DIR_PATH}
 
+USER ros
 # Default command to start the container
 CMD [ "bash" ]

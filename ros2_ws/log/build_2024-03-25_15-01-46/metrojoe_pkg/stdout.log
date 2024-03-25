@@ -1,0 +1,29 @@
+running egg_info
+creating ../../build/metrojoe_pkg/metrojoe.egg-info
+writing ../../build/metrojoe_pkg/metrojoe.egg-info/PKG-INFO
+writing dependency_links to ../../build/metrojoe_pkg/metrojoe.egg-info/dependency_links.txt
+writing entry points to ../../build/metrojoe_pkg/metrojoe.egg-info/entry_points.txt
+writing requirements to ../../build/metrojoe_pkg/metrojoe.egg-info/requires.txt
+writing top-level names to ../../build/metrojoe_pkg/metrojoe.egg-info/top_level.txt
+writing manifest file '../../build/metrojoe_pkg/metrojoe.egg-info/SOURCES.txt'
+reading manifest file '../../build/metrojoe_pkg/metrojoe.egg-info/SOURCES.txt'
+writing manifest file '../../build/metrojoe_pkg/metrojoe.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe
+copying metrojoe/__init__.py -> /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe
+copying metrojoe/main.py -> /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe
+copying metrojoe/modbus_motor_controller.py -> /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe
+copying metrojoe/ds4_gamepad.py -> /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe
+running install
+running install_lib
+creating /ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages/metrojoe
+copying /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe/__init__.py -> /ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages/metrojoe
+copying /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe/main.py -> /ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages/metrojoe
+copying /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe/modbus_motor_controller.py -> /ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages/metrojoe
+copying /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe/ds4_gamepad.py -> /ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages/metrojoe
+byte-compiling /ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages/metrojoe/__init__.py to __init__.cpython-310.pyc
+byte-compiling /ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages/metrojoe/main.py to main.cpython-310.pyc
+byte-compiling /ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages/metrojoe/modbus_motor_controller.py to modbus_motor_controller.cpython-310.pyc
+byte-compiling /ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages/metrojoe/ds4_gamepad.py to ds4_gamepad.cpython-310.pyc
+running install_data

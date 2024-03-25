@@ -1,0 +1,23 @@
+{
+    "name": "ROS2",
+    "image": "metrojoe:latest",
+    "workspaceFolder": "/ros2_ws",
+    "privileged": true,
+    "mounts": [
+        "source=/dev/input,target=/dev/input,type=bind,consistency=cached",
+        "source=${localWorkspaceFolder}/ros2_ws,target=/ros2_ws,type=bind,consistency=cached"
+    ],
+    "postCreateCommand": "source ~/.bashrc",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.pylint"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "python.analysis.extraPaths": ["/opt/ros/humble/local/lib/python3.10/dist-packages"]
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+[1.325s] Invoking command in '/ros2_ws/build/metrojoe': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /ros2_ws/build/metrojoe/build --no-deps install_data
+[1.817s] running develop
+[2.017s] running egg_info
+[2.018s] writing metrojoe.egg-info/PKG-INFO
+[2.018s] writing dependency_links to metrojoe.egg-info/dependency_links.txt
+[2.019s] writing entry points to metrojoe.egg-info/entry_points.txt
+[2.019s] writing requirements to metrojoe.egg-info/requires.txt
+[2.019s] writing top-level names to metrojoe.egg-info/top_level.txt
+[2.023s] reading manifest file 'metrojoe.egg-info/SOURCES.txt'
+[2.025s] writing manifest file 'metrojoe.egg-info/SOURCES.txt'
+[2.028s] running build_ext
+[2.029s] Creating /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe.egg-link (link to .)
+[2.031s] Installing main script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.032s] 
+[2.032s] Installed /ros2_ws/build/metrojoe
+[2.033s] running install_data
+[2.115s] Invoked command in '/ros2_ws/build/metrojoe' returned '0': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /ros2_ws/build/metrojoe/build --no-deps install_data

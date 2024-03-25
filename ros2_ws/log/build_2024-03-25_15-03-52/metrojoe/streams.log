@@ -1,0 +1,43 @@
+[1.357s] Invoking command in '/ros2_ws/src/metrojoe': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/metrojoe build --build-base /ros2_ws/build/metrojoe/build install --record /ros2_ws/build/metrojoe/install.log --single-version-externally-managed
+[1.789s] running egg_info
+[1.790s] creating ../../build/metrojoe/metrojoe.egg-info
+[1.790s] writing ../../build/metrojoe/metrojoe.egg-info/PKG-INFO
+[1.791s] writing dependency_links to ../../build/metrojoe/metrojoe.egg-info/dependency_links.txt
+[1.791s] writing entry points to ../../build/metrojoe/metrojoe.egg-info/entry_points.txt
+[1.791s] writing requirements to ../../build/metrojoe/metrojoe.egg-info/requires.txt
+[1.791s] writing top-level names to ../../build/metrojoe/metrojoe.egg-info/top_level.txt
+[1.792s] writing manifest file '../../build/metrojoe/metrojoe.egg-info/SOURCES.txt'
+[1.795s] reading manifest file '../../build/metrojoe/metrojoe.egg-info/SOURCES.txt'
+[1.796s] writing manifest file '../../build/metrojoe/metrojoe.egg-info/SOURCES.txt'
+[1.797s] running build
+[1.797s] running build_py
+[1.797s] creating /ros2_ws/build/metrojoe/build
+[1.798s] creating /ros2_ws/build/metrojoe/build/lib
+[1.798s] creating /ros2_ws/build/metrojoe/build/lib/metrojoe
+[1.798s] copying metrojoe/__init__.py -> /ros2_ws/build/metrojoe/build/lib/metrojoe
+[1.799s] copying metrojoe/main.py -> /ros2_ws/build/metrojoe/build/lib/metrojoe
+[1.799s] copying metrojoe/modbus_motor_controller.py -> /ros2_ws/build/metrojoe/build/lib/metrojoe
+[1.799s] copying metrojoe/ds4_gamepad.py -> /ros2_ws/build/metrojoe/build/lib/metrojoe
+[1.799s] running install
+[1.799s] running install_lib
+[1.801s] creating /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[1.801s] copying /ros2_ws/build/metrojoe/build/lib/metrojoe/__init__.py -> /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[1.802s] copying /ros2_ws/build/metrojoe/build/lib/metrojoe/main.py -> /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[1.802s] copying /ros2_ws/build/metrojoe/build/lib/metrojoe/modbus_motor_controller.py -> /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[1.802s] copying /ros2_ws/build/metrojoe/build/lib/metrojoe/ds4_gamepad.py -> /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[1.803s] byte-compiling /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/__init__.py to __init__.cpython-310.pyc
+[1.803s] byte-compiling /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/main.py to main.cpython-310.pyc
+[1.804s] byte-compiling /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/modbus_motor_controller.py to modbus_motor_controller.cpython-310.pyc
+[1.805s] byte-compiling /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/ds4_gamepad.py to ds4_gamepad.cpython-310.pyc
+[1.807s] running install_data
+[1.808s] creating /ros2_ws/install/metrojoe/share/ament_index
+[1.808s] creating /ros2_ws/install/metrojoe/share/ament_index/resource_index
+[1.809s] creating /ros2_ws/install/metrojoe/share/ament_index/resource_index/packages
+[1.809s] copying resource/metrojoe -> /ros2_ws/install/metrojoe/share/ament_index/resource_index/packages
+[1.809s] copying package.xml -> /ros2_ws/install/metrojoe/share/metrojoe
+[1.809s] running install_egg_info
+[1.812s] Copying ../../build/metrojoe/metrojoe.egg-info to /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe-0.0.0-py3.10.egg-info
+[1.814s] running install_scripts
+[1.858s] Installing main script to /ros2_ws/install/metrojoe/lib/metrojoe
+[1.859s] writing list of installed files to '/ros2_ws/build/metrojoe/install.log'
+[1.927s] Invoked command in '/ros2_ws/src/metrojoe' returned '0': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/metrojoe build --build-base /ros2_ws/build/metrojoe/build install --record /ros2_ws/build/metrojoe/install.log --single-version-externally-managed

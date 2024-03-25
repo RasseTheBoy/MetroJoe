@@ -1,0 +1,19 @@
+[1.389s] Invoking command in '/ros2_ws/build/metrojoe': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /ros2_ws/build/metrojoe/build --no-deps install_data
+[1.884s] running develop
+[2.086s] running egg_info
+[2.086s] writing metrojoe.egg-info/PKG-INFO
+[2.087s] writing dependency_links to metrojoe.egg-info/dependency_links.txt
+[2.087s] writing entry points to metrojoe.egg-info/entry_points.txt
+[2.087s] writing requirements to metrojoe.egg-info/requires.txt
+[2.087s] writing top-level names to metrojoe.egg-info/top_level.txt
+[2.091s] reading manifest file 'metrojoe.egg-info/SOURCES.txt'
+[2.098s] writing manifest file 'metrojoe.egg-info/SOURCES.txt'
+[2.101s] running build_ext
+[2.102s] Creating /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe.egg-link (link to .)
+[2.103s] Installing ds4_gamepad_node script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.104s] Installing ds4_gamepad_test script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.104s] Installing main script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.105s] 
+[2.105s] Installed /ros2_ws/build/metrojoe
+[2.105s] running install_data
+[2.198s] Invoked command in '/ros2_ws/build/metrojoe' returned '0': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /ros2_ws/build/metrojoe/build --no-deps install_data

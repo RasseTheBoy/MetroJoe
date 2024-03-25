@@ -1,0 +1,9 @@
+source;share/metrojoe/hook/pythonpath.ps1
+source;share/metrojoe/hook/pythonpath.dsv
+source;share/metrojoe/hook/pythonpath.sh
+source;share/metrojoe/hook/ament_prefix_path.ps1
+source;share/metrojoe/hook/ament_prefix_path.dsv
+source;share/metrojoe/hook/ament_prefix_path.sh
+source;../../build/metrojoe/share/metrojoe/hook/pythonpath_develop.ps1
+source;../../build/metrojoe/share/metrojoe/hook/pythonpath_develop.dsv
+source;../../build/metrojoe/share/metrojoe/hook/pythonpath_develop.sh

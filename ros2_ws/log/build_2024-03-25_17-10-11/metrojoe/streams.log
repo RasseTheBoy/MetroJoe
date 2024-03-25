@@ -1,0 +1,50 @@
+[1.407s] Invoking command in '/ros2_ws/build/metrojoe': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --uninstall --editable --build-directory /ros2_ws/build/metrojoe/build
+[1.927s] running develop
+[2.137s] Removing /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe.egg-link (link to .)
+[2.218s] Invoked command in '/ros2_ws/build/metrojoe' returned '0': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --uninstall --editable --build-directory /ros2_ws/build/metrojoe/build
+[2.224s] Invoking command in '/ros2_ws/src/metrojoe': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/metrojoe build --build-base /ros2_ws/build/metrojoe/build install --record /ros2_ws/build/metrojoe/install.log --single-version-externally-managed
+[2.681s] running egg_info
+[2.682s] writing ../../build/metrojoe/metrojoe.egg-info/PKG-INFO
+[2.682s] writing dependency_links to ../../build/metrojoe/metrojoe.egg-info/dependency_links.txt
+[2.683s] writing entry points to ../../build/metrojoe/metrojoe.egg-info/entry_points.txt
+[2.683s] writing requirements to ../../build/metrojoe/metrojoe.egg-info/requires.txt
+[2.683s] writing top-level names to ../../build/metrojoe/metrojoe.egg-info/top_level.txt
+[2.688s] reading manifest file '../../build/metrojoe/metrojoe.egg-info/SOURCES.txt'
+[2.690s] writing manifest file '../../build/metrojoe/metrojoe.egg-info/SOURCES.txt'
+[2.690s] running build
+[2.690s] running build_py
+[2.690s] copying metrojoe/node_basics.py -> /ros2_ws/build/metrojoe/build/lib/metrojoe
+[2.691s] copying metrojoe/ds4_gamepad_node.py -> /ros2_ws/build/metrojoe/build/lib/metrojoe
+[2.691s] copying metrojoe/ds4_gamepad.py -> /ros2_ws/build/metrojoe/build/lib/metrojoe
+[2.692s] running install
+[2.692s] running install_lib
+[2.694s] creating /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[2.694s] copying /ros2_ws/build/metrojoe/build/lib/metrojoe/node_basics.py -> /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[2.694s] copying /ros2_ws/build/metrojoe/build/lib/metrojoe/ds4_gamepad_node.py -> /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[2.694s] copying /ros2_ws/build/metrojoe/build/lib/metrojoe/__init__.py -> /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[2.695s] copying /ros2_ws/build/metrojoe/build/lib/metrojoe/main.py -> /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[2.695s] copying /ros2_ws/build/metrojoe/build/lib/metrojoe/modbus_motor_controller.py -> /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[2.695s] copying /ros2_ws/build/metrojoe/build/lib/metrojoe/ds4_gamepad.py -> /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe
+[2.696s] byte-compiling /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/node_basics.py to node_basics.cpython-310.pyc
+[2.697s] byte-compiling /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/ds4_gamepad_node.py to ds4_gamepad_node.cpython-310.pyc
+[2.698s]   File "/ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/ds4_gamepad_node.py", line 4
+[2.698s]     from 
+[2.698s]          ^
+[2.698s] SyntaxError: invalid syntax
+[2.698s] 
+[2.699s] byte-compiling /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/__init__.py to __init__.cpython-310.pyc
+[2.699s] byte-compiling /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/main.py to main.cpython-310.pyc
+[2.699s] byte-compiling /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/modbus_motor_controller.py to modbus_motor_controller.cpython-310.pyc
+[2.699s] byte-compiling /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/ds4_gamepad.py to ds4_gamepad.cpython-310.pyc
+[2.702s] running install_data
+[2.703s] copying package.xml -> /ros2_ws/install/metrojoe/share/metrojoe
+[2.704s] creating /ros2_ws/install/metrojoe/share/metrojoe/msg
+[2.704s] copying msg/Gamepad.msg -> /ros2_ws/install/metrojoe/share/metrojoe/msg
+[2.704s] running install_egg_info
+[2.708s] Copying ../../build/metrojoe/metrojoe.egg-info to /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe-0.0.0-py3.10.egg-info
+[2.710s] running install_scripts
+[2.756s] Installing ds4_gamepad_node script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.757s] Installing ds4_gamepad_test script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.757s] Installing main script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.758s] writing list of installed files to '/ros2_ws/build/metrojoe/install.log'
+[2.831s] Invoked command in '/ros2_ws/src/metrojoe' returned '0': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/metrojoe build --build-base /ros2_ws/build/metrojoe/build install --record /ros2_ws/build/metrojoe/install.log --single-version-externally-managed

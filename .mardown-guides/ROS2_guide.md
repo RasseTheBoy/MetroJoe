@@ -1,29 +1,32 @@
 
 # Table of contens
 
-- [Building the code](#building-the-code)
+- [Table of contens](#table-of-contens)
+- [Shortcut for opening a new terminal/console/shell window](#shortcut-for-opening-a-new-terminalconsoleshell-window)
+- [Building the code/package](#building-the-codepackage)
 - [Running the code](#running-the-code)
 - [Visualize nodes](#visualize-nodes)
-- [Creating a new package](#creating-a-new-package)
-- [Adding new file/node to a package](#adding-a-new-filenode-to-the-package)
-    - [1. Open terminal and `cd` to the package directory](#1-open-terminal-and-cd-to-the-package-directory-cd-ros2_wssrcpackage_name)
-    - [2. Create the file](#2-create-the-file)
-        - [Option 1 - Inside VSCode or file explorer](#option-1---inside-vscode-or-file-explorer)
-        - [Option 2 - Using terminal](#option-2---using-terminal)
-    - [3. Make file executable](#3-make-file-executable)
-    - [4. Add text to `my_node.py` file](#4-add-text-to-my_nodepy-file)
-        - [File breakdown](#file-breakdown)
-            - [Interpeter and imports](#interpeter-and-imports)
-            - [Node class](#node-class)
-            - [Rclpy wrapper](#rclpy-wrapper)
-            - [Main function](#main-function)
-            - [Main function run](#main-funtion-run)
-    - [5. Add the file to the `entry_point.console_srpipts` section in the setup.py](#5-add-the-file-to-the-entry_pointconsole_srpipts-section-in-the-setuppy)
-        - [`console_scripts` breakdown:](#console_scripts-breakdown)
 - [Launching Realsense in ROS2](#launching-realsense-in-ros2)
-    - [run](#with-ros2-run)
-    - [launch](#with-ros2-launch)
+  - [Start the camera node](#start-the-camera-node)
+    - [with ROS2 `run`](#with-ros2-run)
+    - [with ROS2 `launch`](#with-ros2-launch)
 - [See output of a specific topic](#see-output-of-a-specific-topic)
+- [Creating a new package](#creating-a-new-package)
+- [Adding a new file/node to the package](#adding-a-new-filenode-to-the-package)
+  - [1. Open terminal and `cd` to the package directory](#1-open-terminal-and-cd-to-the-package-directory)
+  - [2. Create the file](#2-create-the-file)
+    - [Option 1 - Inside VSCode or file explorer](#option-1---inside-vscode-or-file-explorer)
+    - [Option 2 - Using terminal and `touch`](#option-2---using-terminal-and-touch)
+  - [3. Make file executable](#3-make-file-executable)
+  - [4. Add text to `my_node.py` file](#4-add-text-to-my_nodepy-file)
+    - [File breakdown](#file-breakdown)
+      - [- Interpeter and imports -](#--interpeter-and-imports--)
+      - [- Node class -](#--node-class--)
+      - [- Rclpy wrapper -](#--rclpy-wrapper--)
+      - [- Main function -](#--main-function--)
+      - [- Main funtion run -](#--main-funtion-run--)
+  - [5. Add the file to the `entry_point.console_srpipts` section in the setup.py](#5-add-the-file-to-the-entry_pointconsole_srpipts-section-in-the-setuppy)
+    - [`console_scripts` breakdown:](#console_scripts-breakdown)
 
 # Shortcut for opening a new terminal/console/shell window
 
@@ -87,15 +90,14 @@ ros2 launch realsense2_camera rs_launch.py depth_module.profile:=1280x720x30 poi
 ros2 topic echo /your/topic
 ```
 
-
 # Creating a new package
 
 ```bash
 cd /ros2_ws/src/
-ros2 pkg create new_package_name --build-type ament_python --dependencies rclpy
+ros2 pkg create <new_package_name> --build-type ament_python --dependencies rclpy
 ```
 
-Change "`new_package_name`" to whatever you want the package to be named. The name needs to be formatted like a Python file, ie. no spaces (use underscores instead).
+Change "`<new_package_name>`" to whatever you want the package to be named. The name needs to be formatted like a Python file, ie. no spaces (use underscores instead).
 If you want to create a C++ package, change `ament_python` to `ament_cmake`.
 
 # Adding a new file/node to the package
@@ -110,10 +112,10 @@ cd /ros2_ws/src/package_name/
 
 ### Option 1 - Inside VSCode or file explorer
 
-Just to go inside you'r package directory, and create a new python file.<br>
+Just to go inside you'r package directory, and create a new python file.\
 Can be named whatever you want, but in this example we will use `my_node.py`.
 
-### Option 2 - Using [terminal](#shortcut-for-opening-a-new-terminalconsoleshell-window)
+### Option 2 - Using [terminal](#shortcut-for-opening-a-new-terminalconsoleshell-window) and `touch`
 
 `touch my_node.py`
 
@@ -247,3 +249,8 @@ entry_points={
 - `my_first_node` = Node file name (without file extension)
 - `main` = Function to call
 
+To run the node, use the following command:
+
+```bash
+ros2 run my_robot_controller test_node
+```

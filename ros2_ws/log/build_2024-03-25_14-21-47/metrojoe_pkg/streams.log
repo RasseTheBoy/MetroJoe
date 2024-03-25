@@ -1,0 +1,39 @@
+[1.482s] Invoking command in '/ros2_ws/src/metrojoe_pkg': PYTHONPATH=/ros2_ws/build/metrojoe_pkg/prefix_override:/ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/metrojoe_pkg build --build-base /ros2_ws/build/metrojoe_pkg/build install --record /ros2_ws/build/metrojoe_pkg/install.log --single-version-externally-managed
+[1.884s] running egg_info
+[1.903s] writing ../../build/metrojoe_pkg/metrojoe_pkg.egg-info/PKG-INFO
+[1.904s] writing dependency_links to ../../build/metrojoe_pkg/metrojoe_pkg.egg-info/dependency_links.txt
+[1.905s] writing entry points to ../../build/metrojoe_pkg/metrojoe_pkg.egg-info/entry_points.txt
+[1.905s] writing requirements to ../../build/metrojoe_pkg/metrojoe_pkg.egg-info/requires.txt
+[1.906s] writing top-level names to ../../build/metrojoe_pkg/metrojoe_pkg.egg-info/top_level.txt
+[1.953s] reading manifest file '../../build/metrojoe_pkg/metrojoe_pkg.egg-info/SOURCES.txt'
+[1.955s] writing manifest file '../../build/metrojoe_pkg/metrojoe_pkg.egg-info/SOURCES.txt'
+[1.955s] running build
+[1.956s] running build_py
+[1.956s] copying metrojoe_pkg/__init__.py -> /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe_pkg
+[1.956s] copying metrojoe_pkg/modbus_motor_controller.py -> /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe_pkg
+[1.957s] copying metrojoe_pkg/ds4_gamepad.py -> /ros2_ws/build/metrojoe_pkg/build/lib/metrojoe_pkg
+[1.957s] running install
+[1.961s] /home/ros/.local/lib/python3.10/site-packages/setuptools/_distutils/cmd.py:66: SetuptoolsDeprecationWarning: setup.py install is deprecated.
+[1.961s] !!
+[1.961s] 
+[1.962s]         ********************************************************************************
+[1.962s]         Please avoid running ``setup.py`` directly.
+[1.962s]         Instead, use pypa/build, pypa/installer or other
+[1.962s]         standards-based tools.
+[1.962s] 
+[1.962s]         See https://blog.ganssle.io/articles/2021/10/setup-py-deprecated.html for details.
+[1.962s]         ********************************************************************************
+[1.963s] 
+[1.963s] !!
+[1.963s]   self.initialize_options()
+[1.970s] running install_lib
+[1.992s] running install_data
+[2.013s] copying resource/metrojoe_pkg -> /ros2_ws/install/metrojoe_pkg/share/ament_index/resource_index/packages
+[2.013s] copying package.xml -> /ros2_ws/install/metrojoe_pkg/share/metrojoe_pkg
+[2.014s] running install_egg_info
+[2.040s] removing '/ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages/metrojoe_pkg-0.0.0-py3.10.egg-info' (and everything under it)
+[2.040s] Copying ../../build/metrojoe_pkg/metrojoe_pkg.egg-info to /ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages/metrojoe_pkg-0.0.0-py3.10.egg-info
+[2.043s] running install_scripts
+[2.258s] Installing main_brain script to /ros2_ws/install/metrojoe_pkg/lib/metrojoe_pkg
+[2.259s] writing list of installed files to '/ros2_ws/build/metrojoe_pkg/install.log'
+[2.336s] Invoked command in '/ros2_ws/src/metrojoe_pkg' returned '0': PYTHONPATH=/ros2_ws/build/metrojoe_pkg/prefix_override:/ros2_ws/install/metrojoe_pkg/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/metrojoe_pkg build --build-base /ros2_ws/build/metrojoe_pkg/build install --record /ros2_ws/build/metrojoe_pkg/install.log --single-version-externally-managed
