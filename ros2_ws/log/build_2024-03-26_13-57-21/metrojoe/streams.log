@@ -1,0 +1,21 @@
+[1.426s] Invoking command in '/ros2_ws/build/metrojoe': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /ros2_ws/build/metrojoe/build --no-deps install_data
+[1.910s] running develop
+[2.111s] running egg_info
+[2.111s] writing metrojoe.egg-info/PKG-INFO
+[2.112s] writing dependency_links to metrojoe.egg-info/dependency_links.txt
+[2.112s] writing entry points to metrojoe.egg-info/entry_points.txt
+[2.113s] writing requirements to metrojoe.egg-info/requires.txt
+[2.113s] writing top-level names to metrojoe.egg-info/top_level.txt
+[2.116s] reading manifest file 'metrojoe.egg-info/SOURCES.txt'
+[2.118s] writing manifest file 'metrojoe.egg-info/SOURCES.txt'
+[2.122s] running build_ext
+[2.122s] Creating /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe.egg-link (link to .)
+[2.124s] Installing gamepad_publisher script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.124s] Installing main_node script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.125s] Installing min_listener script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.126s] Installing min_talker script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.126s] Installing test_node script to /ros2_ws/install/metrojoe/lib/metrojoe
+[2.126s] 
+[2.127s] Installed /ros2_ws/build/metrojoe
+[2.127s] running install_data
+[2.210s] Invoked command in '/ros2_ws/build/metrojoe' returned '0': PYTHONPATH=/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /ros2_ws/build/metrojoe/build --no-deps install_data

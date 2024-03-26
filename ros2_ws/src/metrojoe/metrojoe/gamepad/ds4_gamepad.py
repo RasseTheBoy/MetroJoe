@@ -139,6 +139,7 @@ class Joystick(InputBase):
             The deadzone of the joystick object
         """
         super().__init__(name, 3, code)
+        self._last_value = 0
 
         self.deadzone = deadzone
         self._joystick_center = (250 + 0) // 2
@@ -173,8 +174,19 @@ class Joystick(InputBase):
         int|None
             The parsed event value if it is outside the deadzone, None otherwise
         """
-        value = super().parse_raw_value(event_value)
-        return self._check_deadzone(value - self._joystick_center)
+        raw_value = self._check_deadzone(super().parse_raw_value(event_value) - self._joystick_center)
+
+        if raw_value is not None:
+            self._last_value = raw_value
+            return raw_value
+        
+        elif raw_value is None and self._last_value == 0:
+            return None
+        
+        else:
+            self._last_value = 0
+            return 0
+
 
 
 class Button(InputBase):
@@ -260,6 +272,7 @@ class DS4Gamepad:
 
 
         self.event_device = _find_compatible_devide()
+        print('Device connected:', self.event_device)
 
         self.joystick_deadzone = joystick_deadzone
 
@@ -315,9 +328,9 @@ class DS4Gamepad:
         self.input_obj_lst = self.joystick_obj_lst + self.button_obj_lst + self.trigger_obj_lst + self.dpad_obj_lst
 
 
-    @os_error_catch
-    def yield_obj(self) -> Generator[Any, None, None]:
-        """Yields the object
+    
+    def yield_obj_and_raw_value(self) -> Generator[Any, None, None]:
+        """Yields the object and it's raw value
 
         Warning:
         --------
@@ -326,11 +339,20 @@ class DS4Gamepad:
         Yields:
         -------
         obj, event_value
-            The object is the input of the gamepad and the event value"""
+            The object is the input of the gamepad and the event value
+        """
+        # TODO: Add an exception check for when the device is disconnected
+        
+        # Infinite loop of reading the event device file
         for event in self.event_device.read_loop():
+            # Iterate over all of the input objects
             for input_obj in self.input_obj_lst:
-                if input_obj.is_type_and_code(event.type, event.code) and input_obj.parse_raw_value(event.value) is not None:
-                    yield input_obj, event.value
+                # Check if the event type and code is the same as the object's type and code
+                if input_obj.is_type_and_code(event.type, event.code):
+                    # Parse the raw value of the event
+                    obj_raw_value = input_obj.parse_raw_value(event.value)
+                    if obj_raw_value is not None:
+                        yield input_obj, obj_raw_value
 
 
     def yield_input(self):
@@ -345,11 +367,10 @@ class DS4Gamepad:
         str, int
             The name of the input and the event value
         """
-        for input_obj, event_value in self.yield_obj():
-            yield input_obj.name, input_obj.parse_value(event_value)
+        for input_obj, obj_raw_value in self.yield_obj_and_raw_value():
+            yield input_obj.name, obj_raw_value
 
 
-    @os_error_catch
     def print_event_and_code(self):
         """Prints the event and code of the gamepad
         
@@ -357,8 +378,9 @@ class DS4Gamepad:
         --------
         This is an infinite loop!
         """
-        for input_obj, event_value in self.yield_obj():
-            print(f'Name: {input_obj.name.ljust(15)}  -->  Value: {input_obj.parse_value(event_value)}')
+        for input_obj, obj_raw_value in self.yield_obj_and_raw_value():
+            # continue
+            print(f'Name: {input_obj.name.ljust(15)}  -->  Value: {obj_raw_value}')
 
 
 

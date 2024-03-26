@@ -1,0 +1,20 @@
+running develop
+running egg_info
+writing metrojoe.egg-info/PKG-INFO
+writing dependency_links to metrojoe.egg-info/dependency_links.txt
+writing entry points to metrojoe.egg-info/entry_points.txt
+writing requirements to metrojoe.egg-info/requires.txt
+writing top-level names to metrojoe.egg-info/top_level.txt
+reading manifest file 'metrojoe.egg-info/SOURCES.txt'
+writing manifest file 'metrojoe.egg-info/SOURCES.txt'
+running build_ext
+Creating /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe.egg-link (link to .)
+Installing gamepad_publisher script to /ros2_ws/install/metrojoe/lib/metrojoe
+Installing main_node script to /ros2_ws/install/metrojoe/lib/metrojoe
+Installing min_listener script to /ros2_ws/install/metrojoe/lib/metrojoe
+Installing min_talker script to /ros2_ws/install/metrojoe/lib/metrojoe
+Installing modbus_motor_controller script to /ros2_ws/install/metrojoe/lib/metrojoe
+Installing test_node script to /ros2_ws/install/metrojoe/lib/metrojoe
+
+Installed /ros2_ws/build/metrojoe
+running install_data

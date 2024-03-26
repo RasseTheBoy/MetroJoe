@@ -1,0 +1,49 @@
+[0.000000] (-) TimerEvent: {}
+[0.000652] (metrojoe) JobQueued: {'identifier': 'metrojoe', 'dependencies': OrderedDict()}
+[0.001181] (metrojoe) JobStarted: {'identifier': 'metrojoe'}
+[0.099456] (-) TimerEvent: {}
+[0.200101] (-) TimerEvent: {}
+[0.300723] (-) TimerEvent: {}
+[0.401349] (-) TimerEvent: {}
+[0.502046] (-) TimerEvent: {}
+[0.602795] (-) TimerEvent: {}
+[0.703685] (-) TimerEvent: {}
+[0.804717] (-) TimerEvent: {}
+[0.905358] (-) TimerEvent: {}
+[1.005990] (-) TimerEvent: {}
+[1.106578] (-) TimerEvent: {}
+[1.207188] (-) TimerEvent: {}
+[1.307823] (-) TimerEvent: {}
+[1.361073] (metrojoe) Command: {'cmd': ['/usr/bin/python3', 'setup.py', 'develop', '--editable', '--build-directory', '/ros2_ws/build/metrojoe/build', '--no-deps', 'install_data'], 'cwd': '/ros2_ws/build/metrojoe', 'env': {'HOSTNAME': '29b0b1a6bc88', 'GIT_ASKPASS': '/vscode/vscode-server/bin/linux-arm64/863d2581ecda6849923a2118d93a088b0745d9d6/extensions/git/dist/askpass.sh', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/humble/lib/aarch64-linux-gnu:/opt/ros/humble/lib', 'BROWSER': '/vscode/vscode-server/bin/linux-arm64/863d2581ecda6849923a2118d93a088b0745d9d6/bin/helpers/browser.sh', 'HOME': '/home/ros', 'TERM_PROGRAM_VERSION': '1.87.2', 'VSCODE_IPC_HOOK_CLI': '/tmp/vscode-ipc-4e16117f-3291-4ef3-98e6-39f3569cad05.sock', 'ROS_PYTHON_VERSION': '3', 'VSCODE_GIT_ASKPASS_MAIN': '/vscode/vscode-server/bin/linux-arm64/863d2581ecda6849923a2118d93a088b0745d9d6/extensions/git/dist/askpass-main.js', 'ROS2_MOUNT_DIR_PATH': '/ros2_ws', 'VSCODE_GIT_ASKPASS_NODE': '/vscode/vscode-server/bin/linux-arm64/863d2581ecda6849923a2118d93a088b0745d9d6/node', 'COLORTERM': 'truecolor', 'REMOTE_CONTAINERS': 'true', 'COLCON_PREFIX_PATH': '/ros2_ws/install', 'ROS_DISTRO': 'humble', 'REMOTE_CONTAINERS_IPC': '/tmp/vscode-remote-containers-ipc-7ebfa4d4-adcc-4c77-b910-2bdc88601a76.sock', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'USERNAME': 'ros', 'TERM': 'xterm-256color', 'ROS_LOCALHOST_ONLY': '0', 'PATH': '/opt/ros/humble/bin:/vscode/vscode-server/bin/linux-arm64/863d2581ecda6849923a2118d93a088b0745d9d6/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'REMOTE_CONTAINERS_SOCKETS': '["/tmp/vscode-ssh-auth-7ebfa4d4-adcc-4c77-b910-2bdc88601a76.sock","/tmp/.X11-unix/X0","/home/ros/.gnupg/S.gpg-agent"]', 'DISPLAY': ':0', 'LANG': 'C.UTF-8', 'VSCODE_GIT_IPC_HANDLE': '/tmp/vscode-git-86ba36ff25.sock', 'TERM_PROGRAM': 'vscode', 'SSH_AUTH_SOCK': '/tmp/vscode-ssh-auth-7ebfa4d4-adcc-4c77-b910-2bdc88601a76.sock', 'AMENT_PREFIX_PATH': '/ros2_ws/install/metrojoe:/opt/ros/humble', 'REMOTE_CONTAINERS_DISPLAY_SOCK': '/tmp/.X11-unix/X0', 'SHELL': '/bin/sh', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'PWD': '/ros2_ws/build/metrojoe', 'LC_ALL': 'C.UTF-8', 'PYTHONPATH': '/ros2_ws/build/metrojoe/prefix_override:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:/ros2_ws/build/metrojoe:/ros2_ws/install/metrojoe/lib/python3.10/site-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages', 'COLCON': '1'}, 'shell': False}
+[1.407985] (-) TimerEvent: {}
+[1.508780] (-) TimerEvent: {}
+[1.609384] (-) TimerEvent: {}
+[1.709999] (-) TimerEvent: {}
+[1.810628] (-) TimerEvent: {}
+[1.837322] (metrojoe) StdoutLine: {'line': b'running develop\n'}
+[1.910787] (-) TimerEvent: {}
+[2.011398] (-) TimerEvent: {}
+[2.030413] (metrojoe) StdoutLine: {'line': b'running egg_info\n'}
+[2.031253] (metrojoe) StdoutLine: {'line': b'writing metrojoe.egg-info/PKG-INFO\n'}
+[2.032884] (metrojoe) StdoutLine: {'line': b'writing dependency_links to metrojoe.egg-info/dependency_links.txt\n'}
+[2.033217] (metrojoe) StdoutLine: {'line': b'writing entry points to metrojoe.egg-info/entry_points.txt\n'}
+[2.033398] (metrojoe) StdoutLine: {'line': b'writing requirements to metrojoe.egg-info/requires.txt\n'}
+[2.033586] (metrojoe) StdoutLine: {'line': b'writing top-level names to metrojoe.egg-info/top_level.txt\n'}
+[2.036874] (metrojoe) StdoutLine: {'line': b"reading manifest file 'metrojoe.egg-info/SOURCES.txt'\n"}
+[2.038409] (metrojoe) StdoutLine: {'line': b"writing manifest file 'metrojoe.egg-info/SOURCES.txt'\n"}
+[2.041365] (metrojoe) StdoutLine: {'line': b'running build_ext\n'}
+[2.041823] (metrojoe) StdoutLine: {'line': b'Creating /ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe.egg-link (link to .)\n'}
+[2.043708] (metrojoe) StdoutLine: {'line': b'Installing gamepad_publisher script to /ros2_ws/install/metrojoe/lib/metrojoe\n'}
+[2.044123] (metrojoe) StdoutLine: {'line': b'Installing main_node script to /ros2_ws/install/metrojoe/lib/metrojoe\n'}
+[2.044413] (metrojoe) StdoutLine: {'line': b'Installing min_listener script to /ros2_ws/install/metrojoe/lib/metrojoe\n'}
+[2.044704] (metrojoe) StdoutLine: {'line': b'Installing min_talker script to /ros2_ws/install/metrojoe/lib/metrojoe\n'}
+[2.044942] (metrojoe) StdoutLine: {'line': b'Installing modbus_motor_controller script to /ros2_ws/install/metrojoe/lib/metrojoe\n'}
+[2.045169] (metrojoe) StdoutLine: {'line': b'Installing test_node script to /ros2_ws/install/metrojoe/lib/metrojoe\n'}
+[2.045753] (metrojoe) StdoutLine: {'line': b'\n'}
+[2.045953] (metrojoe) StdoutLine: {'line': b'Installed /ros2_ws/build/metrojoe\n'}
+[2.046100] (metrojoe) StdoutLine: {'line': b'running install_data\n'}
+[2.111573] (-) TimerEvent: {}
+[2.122564] (metrojoe) CommandEnded: {'returncode': 0}
+[2.211726] (-) TimerEvent: {}
+[2.268092] (metrojoe) JobEnded: {'identifier': 'metrojoe', 'rc': 0}
+[2.269919] (-) EventReactorShutdown: {}

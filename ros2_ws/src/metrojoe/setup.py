@@ -35,9 +35,10 @@ setup(
         'console_scripts': [
             f'main_node =' + module_from_file('main'),
             f'test_node =' + module_from_file('main', 'test') ,
-            f'min_talker = '+ module_from_file('minimal_publisher'),
-            f'min_listener = '+ module_from_file('minimal_subscriber'),
-            f'gamepad_publisher = '+ module_from_file('ds4_gamepad_node'),
+            f'min_talker = '+ module_from_file('minimal_test.minimal_publisher'),
+            f'min_listener = '+ module_from_file('minimal_test.minimal_subscriber'),
+            f'gamepad_publisher = '+ module_from_file('gamepad.ds4_gamepad_node'),
+            f'modbus_motor_controller =' + module_from_file('modbus.modbus_motor_controller_node'),
         ],
         'rosidl_cli.command.generate.type_extensions': [
             'python = rosidl_generator_py.cli:GeneratePythonCommand',

@@ -25,3 +25,26 @@ docker run -it --rm -v ~/metrojoe/MetroJoe/ros2_ws:/ros2_ws -v /dev/input/:/dev/
 - `--privileged` - Give the container full access to the host
   - Required for reading the joystick inputs from the `/dev/input/` directory
 - `metrojoe` - The name of the image to run
+
+## ROS2 Nodes
+
+```bash
+ros2 run metrojoe <node_name>
+```
+
+All of the available nodes are listed below.
+(All the nodes are still a work in progress.)
+
+### `gamepad_node` (W.I.P.)
+
+Topics:
+
+- `/gamepad`
+  - Type: `sensor_msgs/msg/String`
+  - `<input_name>:<input_value>`
+  - TODO: Change the type to a custom message type
+    - (is in the works)
+
+### `motor_controller_node` (W.I.P.)
+
+A publisher node that sends the motor commands to the ModBus motor controller.
