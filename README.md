@@ -4,6 +4,10 @@ A [Metropolia Garage](https://www.metropolia.fi/fi/tutkimus-kehitys-ja-innovaati
 
 ## Starting the `Metrojoe` image
 
+**It is recommender to run the image in a [devcontainer](.devcontainer/devcontainer.json) for development.**
+
+To run the code from a terminal, use the following command:
+
 ```bash
 docker run -it --rm -v ~/metrojoe/MetroJoe/ros2_ws:/ros2_ws -v /dev/input/:/dev/input/ --privileged metrojoe
 ```
@@ -33,11 +37,13 @@ ros2 run metrojoe <node_name>
 ```
 
 All of the available nodes are listed below.
-(All the nodes are still a work in progress.)
+(All of the nodes are still a work in progress.)
 
 ### `gamepad_node` (W.I.P.)
 
-Publish topics:
+Reads the gamepad inputs and publishes them to a topic.
+
+**Publish topics:**
 
 - `/gamepad`
   - Type: [GamepadInput](ros2_ws/src/metrojoe_interfaces/msg/GamepadInput.msg)
@@ -47,9 +53,9 @@ Publish topics:
 
 ### `modbus_motor_controller` (W.I.P.)
 
-A publisher node that sends the motor commands to the ModBus motor controller.
+Controls the ModBus motor controller.
 
-Subscriber topics:
+**Subscriber topics:**
 
 - `/drive_speed`
   - Type: [DriveSpeed](ros2_ws/src/metrojoe_interfaces/msg/DriveSpeed.msg)
