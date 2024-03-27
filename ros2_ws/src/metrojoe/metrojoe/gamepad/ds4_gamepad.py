@@ -126,7 +126,7 @@ class InputBase:
 
 class Joystick(InputBase):
     """The Joystick class for the gamepad object"""
-    def __init__(self, name:str, code:int, deadzone:int=10) -> None:
+    def __init__(self, name:str, code:int, deadzone:int=25) -> None:
         """Initializes the Joystick class
         
         Parameters:

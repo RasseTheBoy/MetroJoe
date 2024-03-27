@@ -4,17 +4,12 @@
   <name>metrojoe</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="ros@todo.todo">ros</maintainer>
+  <maintainer email="rasmus.ohert@outlook.com">ros</maintainer>
   <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>
   <exec_depend>std_msgs</exec_depend>
-  <depend>builtin_interfaces</depend>
-  <depend>rosidl_default_generators</depend>
-  <exec_depend>rosidl_default_runtime</exec_depend>
-  <member_of_group>rosidl_interface_packages</member_of_group>
-
-<!-- The `message_generation` and `message_runtime` dependencies are used in ROS1, not ROS2. -->
+  <depend>metrojoe_interfaces</depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>

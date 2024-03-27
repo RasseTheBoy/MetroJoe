@@ -1,2 +1,0 @@
-String name
-String value

@@ -15,11 +15,9 @@ LABEL Name="${USERNAME}-$ROS_DISTRO-orin" \
 ENV HOME /home/${USERNAME}
 
 # Create a root user
-RUN groupadd --gid ${USER_GID} ${USERNAME} \
-   && useradd --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME} \
-   && groupadd -f input \
-   && usermod -a -G input ${USERNAME} \
-   && mkdir ${HOME}/.config && chown ${USER_UID}:${USER_GID} ${HOME}/.config
+RUN groupadd --gid $USER_GID $USERNAME \
+    && adduser --uid $USER_UID --gid $USER_GID --disabled-password --gecos "" ${USERNAME} \
+    && usermod -a -G dialout $USERNAME
 
 # Install basic tools, Python 3.10.XX, minimalmodbus, and ROS packages
 RUN apt-get update && apt-get install -y --no-install-recommends \

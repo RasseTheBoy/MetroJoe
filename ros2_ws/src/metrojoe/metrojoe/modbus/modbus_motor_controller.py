@@ -1,3 +1,4 @@
+from time import sleep
 from typing import Literal
 
 
@@ -116,6 +117,7 @@ class ModbusMotorController:
             raise ValueError(f'Speed input {speed_input} exceeds the maximum speed input {self._speed_max_input}')
 
         # Change the direction
+        # TODO: Have a memory of the current direction and only change if it is different
         self._change_direction(direction)
 
         # Calcualte the speed value for the register
@@ -131,7 +133,22 @@ class ModbusMotorController:
         self.cprint(f'Driven {direction} at speed: {speed_input}')
 
 
+    def stop_speed(self):
+        """Stop the motor speed"""
+        self._instrument_obj.write_register(
+            self._speed_register_address,
+            0,
+            functioncode=6
+        )
+
+        self.cprint(f'Stopped the motor speed')
+
+
 
 if __name__ == '__main__':
     motor_controller_1 = ModbusMotorController(1, 'left')
+
+    motor_controller_1.drive_direction('forward', 100)
+    sleep(3)
+    motor_controller_1.stop_speed()
 

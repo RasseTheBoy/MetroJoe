@@ -1,5 +1,0 @@
-  File "/ros2_ws/install/metrojoe/lib/python3.10/site-packages/metrojoe/ds4_gamepad_node.py", line 4
-    from 
-         ^
-SyntaxError: invalid syntax
-

@@ -7,11 +7,14 @@
         "source=/dev/input,target=/dev/input,type=bind,consistency=cached",
         "source=${localWorkspaceFolder}/ros2_ws,target=/ros2_ws,type=bind,consistency=cached"
     ],
-    "postCreateCommand": "source ~/.bashrc",
+    "runArgs": ["--device=/dev/ttyUSB0"],
     "customizations": {
         "vscode": {
             "extensions": [
-                "ms-python.python"
+                "ms-python.python",
+                "Gruntfuggly.todo-tree",
+                "alefragnani.Bookmarks",
+                "ms-iot.vscode-ros"
             ],
             "settings": {
                 "terminal.integrated.defaultProfile.linux": "bash",

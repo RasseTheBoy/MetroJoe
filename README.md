@@ -37,14 +37,22 @@ All of the available nodes are listed below.
 
 ### `gamepad_node` (W.I.P.)
 
-Topics:
+Publish topics:
 
 - `/gamepad`
-  - Type: `sensor_msgs/msg/String`
-  - `<input_name>:<input_value>`
-  - TODO: Change the type to a custom message type
-    - (is in the works)
+  - Type: [GamepadInput](ros2_ws/src/metrojoe_interfaces/msg/GamepadInput.msg)
+    - string: name
+    - int16: value
+    - Test in terminal: `ros2 topic echo /gamepad`
 
-### `motor_controller_node` (W.I.P.)
+### `modbus_motor_controller` (W.I.P.)
 
 A publisher node that sends the motor commands to the ModBus motor controller.
+
+Subscriber topics:
+
+- `/drive_speed`
+  - Type: [DriveSpeed](ros2_ws/src/metrojoe_interfaces/msg/DriveSpeed.msg)
+    - string: direction
+    - int16: speed
+  - Test in terminal: `ros2 topic pub --once /drive_speed metrojoe_interfaces/msg/DriveSpeed "{direction: '<forward/reverse>', speed: <0-255>}"`

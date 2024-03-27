@@ -1,5 +1,4 @@
 from setuptools import find_packages, setup
-import os
 
 package_name = 'metrojoe'
 
@@ -19,15 +18,12 @@ setup(
         (
             'share/' + package_name,
             ['package.xml']
-        ),
-        (
-            os.path.join('share', package_name, 'msg'), ['msg/Gamepad.msg']
         )
     ],
     install_requires=['setuptools', 'rclpy'],
     zip_safe=True,
     maintainer='Rasmus Ohert',
-    maintainer_email='ros@todo.todo',
+    maintainer_email='rasmus.ohert@outlook.com',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
@@ -39,9 +35,6 @@ setup(
             f'min_listener = '+ module_from_file('minimal_test.minimal_subscriber'),
             f'gamepad_publisher = '+ module_from_file('gamepad.ds4_gamepad_node'),
             f'modbus_motor_controller =' + module_from_file('modbus.modbus_motor_controller_node'),
-        ],
-        'rosidl_cli.command.generate.type_extensions': [
-            'python = rosidl_generator_py.cli:GeneratePythonCommand',
-        ],
+        ]
     },
 )
