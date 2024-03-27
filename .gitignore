@@ -51,4 +51,4 @@ qtcreator-*
 CATKIN_IGNORE
 
 # Ignore the log files
-*.log
+log
