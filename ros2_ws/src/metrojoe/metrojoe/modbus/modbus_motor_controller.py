@@ -24,7 +24,8 @@ class ModbusMotorController:
             speed_max_input:int = 255,
             speed_max_register:int = 1000,
             speed_register_address:int = 1,
-            direction_register_address:int =3
+            direction_register_address:int =3,
+            pwm_register_address:int = 10
         ):
         def _get_parity() -> Literal['E', 'N']:
             """Get the parity value for the serial communication
@@ -48,6 +49,7 @@ class ModbusMotorController:
         self._speed_max_register = speed_max_register
         self._speed_register_address = speed_register_address
         self._direction_register_address = direction_register_address
+        self._pwm_register_address = pwm_register_address
 
         # Set internal memory attributes
         self._last_direction = 'forward'
@@ -86,6 +88,11 @@ class ModbusMotorController:
         print(f'[{self._slave_address}] <{self._side!r}> {msg}')
 
 
+    def get_pwm_reg_val(self):
+        """Check the pwm register value"""
+        return self._instrument_obj.read_register(self._pwm_register_address, functioncode=3)
+
+
     def _change_direction(self, direction:Literal['forward', 'reverse']):
         """Change the motor direction
         
@@ -94,8 +101,12 @@ class ModbusMotorController:
         direction: Literal['forward', 'reverse']
             The direction to change to
         """
+        # TODO: Check if the motor is running from the motor controllers register (PWM?)
+        # TODO: Direction can be changed only if the motor is slow enough (doesn't need to be stopped)
         if self._last_speed != 0:
-            raise MotorDirectionError
+            raise MotorDirectionError('Last speed is not 0!')
+        elif self.get_pwm_reg_val() != 0:
+            raise MotorDirectionError('Motor PWM is not 0!')
 
         # Get the direction register value from the direction map
         direction_reg_value = self.direction_map.get((direction, self._side), None) # type: ignore
@@ -162,13 +173,14 @@ class ModbusMotorController:
                 self._change_direction(direction)
             except MotorDirectionError as e:
                 self.cprint(f'Error: {e}')
-                self.cprint('Stopping the motor speed')
-                self.stop_speed()
+                # TODO: Should the motor be stopped if both direction buttons are pressed?
+                # self.cprint('Stopping the motor speed')
+                # self.stop_speed()
                 return
 
         _speed_register = self._set_speed(speed_input)
         
-        self.cprint(f'Driven {direction} at speed: {speed_input} ({_speed_register})')
+        self.cprint(f'Drive {direction!r} at speed: {speed_input} ({_speed_register})')
 
 
     def stop_speed(self):

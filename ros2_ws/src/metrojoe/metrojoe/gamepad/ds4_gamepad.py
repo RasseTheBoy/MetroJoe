@@ -239,7 +239,7 @@ class Dpad(InputBase):
 
 class Trigger(InputBase):
     """The Trigger class for the gamepad object"""
-    def __init__(self, name:str, code:int, max_value:int=255, power_segments:int=6) -> None:
+    def __init__(self, name:str, code:int, max_value:int=255, power_segments:int=3) -> None:
         """Initializes the Trigger class
         
         Parameters:
@@ -443,7 +443,8 @@ class DS4Gamepad:
         This is an infinite loop!
         """
         for input_obj, obj_raw_value in self.yield_obj_and_raw_value():
-            print(f'Name: {input_obj.name.ljust(15)}  -->  Value: {obj_raw_value}')
+            fd(input_obj.class_name)
+            # print(f'Name: {input_obj.name.ljust(15)}  -->  Value: {obj_raw_value}')
 
 
 

@@ -35,8 +35,8 @@ def main():
             print(f"Error writing to register {register_address}: {e}")
 
     # Test read and write operations
-    read_register(0)  # Replace with your register address
-    write_register(1, 123)  # Replace with your register address and value
+    write_register(1, 0)  # Replace with your register address and value
+    read_register(10)  # Replace with your register address
 
 
 if __name__ == '__main__':

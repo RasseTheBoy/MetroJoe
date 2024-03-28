@@ -11,42 +11,37 @@ class MainBrain(NodeBase):
         )
 
         # Create a subscriber for the 'gamepad' topic
-        self.subscription = self.create_subscription(
+        self.gamepad_trigger_subscriber = self.create_subscription(
             GamepadInput,
             'gamepad_trigger',
-            self.gamepad_input_callback,
+            self.gamepad_trigger_callback,
+            10
+        )
+
+        self.speed_publisher = self.create_publisher(
+            DriveSpeed,
+            'drive_speed',
             10
         )
 
     
-    def gamepad_input_callback(self, msg:GamepadInput):
+    def gamepad_trigger_callback(self, msg:GamepadInput):
         """Callback function for the 'gamepad' topic
         
         Parameters:
         -----------
         msg: GamepadInput
-            The message received from the 'gamepad' topic"""
-        if msg.name not in ['R2', 'L2']:
-            return
-
-        # Get the speed value and format the direction
-        speed = msg.value
-        direction = 'forward' if msg.name == 'R2' else 'reverse'
-
+            The message received from the 'gamepad' topic
+        """
         # Create the DriveSpeed message
         drive_speed_msg = DriveSpeed(
-            direction=direction,
-            speed=speed
+            direction='forward' if msg.name == 'R2' else 'reverse',
+            speed=msg.value
         )
 
         # Publish the message
-        self.get_logger().info(f'Publishing: {drive_speed_msg}')
-        self.publisher = self.create_publisher(
-            DriveSpeed,
-            'drive_speed',
-            10
-        )
-        self.publisher.publish(drive_speed_msg)
+        self.log(f'Publishing: {drive_speed_msg}')
+        self.speed_publisher.publish(drive_speed_msg)
 
 
 @run_rclpy

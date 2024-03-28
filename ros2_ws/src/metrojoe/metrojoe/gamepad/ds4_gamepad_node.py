@@ -19,6 +19,13 @@ class DS4GamepadNode(NodeBase):
             10
         )
 
+        # Create a publisher for the 'gamepad_joystick' topic
+        self.gamepad_joystick_publisher = self.create_publisher(
+            GamepadInput,
+            'gamepad_joystick',
+            10
+        )
+
         # Create a timer to publish the button inputs
         self.timer = self.create_timer(0.5, self.publish_button_inputs)
 
@@ -35,6 +42,9 @@ class DS4GamepadNode(NodeBase):
                 case 'trigger':
                     self.gamepad_trigger_publisher.publish(gamepad_msg)
                     self.log(f'Publishing: {input_obj.name} = {input_value}')
+
+                case _:
+                    self.log(f'Uknown class_name: {input_obj.class_name}')
 
 
 

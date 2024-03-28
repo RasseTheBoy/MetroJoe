@@ -55,7 +55,7 @@ All of the available nodes are listed below.
 
 The main node that works as the brain of the robot.
 
-Subscribes to the `/gamepad` topic and publishes to the `/drive_speed` topic.\
+Subscribes to the `/gamepad_trigger` topic and publishes to the `/drive_speed` topic.\
 In the future, more functions will be added to this node.
 
 ### `gamepad_node` (W.I.P.)
@@ -64,11 +64,11 @@ Reads the gamepad inputs and publishes them to a topic.
 
 **Publish topics:**
 
-- `/gamepad`
+- `/gamepad_trigger`
   - Type: [GamepadInput](ros2_ws/src/metrojoe_interfaces/msg/GamepadInput.msg)
     - string: name
     - int16: value
-    - Test in terminal: `ros2 topic echo /gamepad`
+    - Test in terminal: `ros2 topic echo /gamepad_trigger`
 
 ### `modbus_motor_controller` (W.I.P.)
 
