@@ -1,23 +1,22 @@
-from ..node_basics import spin_node, run_rclpy
+from ..node_basics import spin_node, run_rclpy, NodeBase
 from .ds4_gamepad import DS4Gamepad
-from rclpy.node import Node
 from metrojoe_interfaces.msg import GamepadInput # type: ignore
 from FastDebugger import fd
 
 
-class DS4GamepadNode(Node):
+class DS4GamepadNode(NodeBase):
     def __init__(self):
         """Create a DS4GamepadNode object that publishes the gamepad inputs to the 'gamepad' topic"""
-        super().__init__(node_name='ds4_gamepad_node', parameter_overrides=[])
+        super().__init__(node_name='ds4_gamepad_node')
         
         # Create a DS4Gamepad object
         self.gamepad_obj = DS4Gamepad()
 
-        # Create a publisher for the 'gamepad' topic
-        self.publisher = self.create_publisher(
+        # Create a publisher for the 'gamepad_trigger' topic
+        self.gamepad_trigger_publisher = self.create_publisher(
             GamepadInput,
-            'gamepad',
-            3
+            'gamepad_trigger',
+            10
         )
 
         # Create a timer to publish the button inputs
@@ -28,11 +27,14 @@ class DS4GamepadNode(Node):
         """Publish the button inputs to the 'gamepad' topic"""
         gamepad_msg = GamepadInput()
 
-        for input_name, input_value in self.gamepad_obj.yield_input():
-            gamepad_msg.name = input_name
+        for input_obj, input_value in self.gamepad_obj.yield_obj_and_raw_value():
+            gamepad_msg.name = input_obj.name
             gamepad_msg.value = input_value
-            self.publisher.publish(gamepad_msg)
-            self.get_logger().info(f'Publishing: {gamepad_msg.name} = {gamepad_msg.value}')
+
+            match input_obj.class_name:
+                case 'trigger':
+                    self.gamepad_trigger_publisher.publish(gamepad_msg)
+                    self.log(f'Publishing: {input_obj.name} = {input_value}')
 
 
 

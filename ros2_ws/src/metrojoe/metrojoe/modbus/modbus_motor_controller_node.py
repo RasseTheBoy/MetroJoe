@@ -1,11 +1,10 @@
-from ..node_basics import run_rclpy, spin_node
-from rclpy.node import Node
+from metrojoe.node_basics import run_rclpy, spin_node, NodeBase
 from .modbus_motor_controller import ModbusMotorController
 from metrojoe_interfaces.msg import DriveSpeed # type: ignore
 
 
 
-class ModbusMotorControllerNode(Node):
+class ModbusMotorControllerNode(NodeBase):
     def __init__(self):
         super().__init__(node_name='modbus_motor_controller', parameter_overrides=[])
 
@@ -20,14 +19,8 @@ class ModbusMotorControllerNode(Node):
             DriveSpeed,
             'drive_speed',
             self.motor_drive_speed_callback,
-            3
+            10
         )
-
-        self.log('ModbusMotorControllerNode has been created')
-
-
-    def log(self, msg):
-        self.get_logger().info(msg)
 
 
     # a subscriber to the topic /motor_controller that will drive the motor

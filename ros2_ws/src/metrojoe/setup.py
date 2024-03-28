@@ -29,8 +29,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            f'main_node =' + module_from_file('main'),
-            f'test_node =' + module_from_file('main', 'test') ,
+            f'main = '+ module_from_file('main'),
             f'min_talker = '+ module_from_file('minimal_test.minimal_publisher'),
             f'min_listener = '+ module_from_file('minimal_test.minimal_subscriber'),
             f'gamepad_publisher = '+ module_from_file('gamepad.ds4_gamepad_node'),

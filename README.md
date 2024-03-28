@@ -2,6 +2,18 @@
 
 A [Metropolia Garage](https://www.metropolia.fi/fi/tutkimus-kehitys-ja-innovaatiot/yhteistyoalustat/garage) project made by students of [Metropolia UAS](https://www.metropolia.fi/fi).
 
+## Table of Contents
+
+- [MetroJoe](#metrojoe)
+  - [Table of Contents](#table-of-contents)
+  - [Starting the `Metrojoe` image](#starting-the-metrojoe-image)
+    - [Breakdown](#breakdown)
+  - [ROS2 Nodes](#ros2-nodes)
+    - [`main` (W.I.P.)](#main-wip)
+    - [`gamepad_node` (W.I.P.)](#gamepad_node-wip)
+    - [`modbus_motor_controller` (W.I.P.)](#modbus_motor_controller-wip)
+
+
 ## Starting the `Metrojoe` image
 
 **It is recommender to run the image in a [devcontainer](.devcontainer/devcontainer.json) for development.**
@@ -38,6 +50,13 @@ ros2 run metrojoe <node_name>
 
 All of the available nodes are listed below.
 (All of the nodes are still a work in progress.)
+
+### `main` (W.I.P.)
+
+The main node that works as the brain of the robot.
+
+Subscribes to the `/gamepad` topic and publishes to the `/drive_speed` topic.\
+In the future, more functions will be added to this node.
 
 ### `gamepad_node` (W.I.P.)
 

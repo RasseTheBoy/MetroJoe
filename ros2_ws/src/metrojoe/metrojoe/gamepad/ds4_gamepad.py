@@ -1,3 +1,4 @@
+from functools import cache
 from typing         import Any, Generator
 from evdev          import InputDevice
 from FastDebugger import fd
@@ -44,6 +45,8 @@ class InputBase:
         self.name = name
         self.type = type
         self.code = code
+
+        self.class_name = self.__class__.__name__.lower()
 
 
     def is_type(self, event_type:int) -> bool:
@@ -93,7 +96,7 @@ class InputBase:
         """
         return self.is_type(event_type) and self.is_code(event_code)
 
-    def parse_raw_value(self, event_value:int) -> int:
+    def _parse_raw_value(self, event_value:int) -> int:
         """Parses the raw value of the event
         
         Parameters:
@@ -121,7 +124,7 @@ class InputBase:
         int
             The parsed event value
         """
-        return self.parse_raw_value(event_value)
+        return self._parse_raw_value(event_value)
 
 
 class Joystick(InputBase):
@@ -161,7 +164,7 @@ class Joystick(InputBase):
         return None if abs(value) < self.deadzone else value
     
 
-    def parse_raw_value(self, event_value:int) -> int|None:
+    def _parse_raw_value(self, event_value:int) -> int|None:
         """Parses the raw value of the event
         
         Parameters:
@@ -174,7 +177,7 @@ class Joystick(InputBase):
         int|None
             The parsed event value if it is outside the deadzone, None otherwise
         """
-        raw_value = self._check_deadzone(super().parse_raw_value(event_value) - self._joystick_center)
+        raw_value = self._check_deadzone(super()._parse_raw_value(event_value) - self._joystick_center)
 
         if raw_value is not None:
             self._last_value = raw_value
@@ -216,7 +219,7 @@ class Button(InputBase):
         bool
             True if the event value is 1, False otherwise
         """
-        return self.parse_raw_value(event_value) == 1
+        return self._parse_raw_value(event_value) == 1
 
 
 class Dpad(InputBase):
@@ -236,7 +239,7 @@ class Dpad(InputBase):
 
 class Trigger(InputBase):
     """The Trigger class for the gamepad object"""
-    def __init__(self, name:str, code:int) -> None:
+    def __init__(self, name:str, code:int, max_value:int=255, power_segments:int=6) -> None:
         """Initializes the Trigger class
         
         Parameters:
@@ -245,8 +248,64 @@ class Trigger(InputBase):
             The name of the trigger object
         code: int
             The code of the trigger object
+        power_segments: int
+            The number of power segments for the trigger object
         """
         super().__init__(name, 3, code)
+
+        self._max_value = max_value
+        self._power_segments = power_segments
+
+        self._segment_lst = [
+            round(max_value / power_segments * i)
+            for i in range(power_segments+1)
+        ]
+
+        self.segment_val:int|None = None
+
+
+    @cache
+    def get_segment_value(self, raw_value:int) -> int:
+        """Parses through the segment list to get the segment value\\
+        Chaches the result for faster access
+        
+        Parameters:
+        -----------
+        raw_value: int
+            The raw value of the event
+        """
+        for seg_val in self._segment_lst[::-1]:
+            if raw_value >= seg_val:
+                return seg_val
+
+        raise ValueError(f'Invalid raw value: {raw_value}')
+
+
+    def _parse_raw_value(self, event_value: int) -> int|None:
+        """Parses the raw (segment) value of the event
+        
+        Parameters:
+        -----------
+        event_value: int
+            The event value to parse
+            
+        Returns:
+        --------
+        int|None
+            The parsed event value if it is outside the deadzone, None otherwise
+        """
+        # Get the segment value from the raw value
+        _segment_val = self.get_segment_value(
+            super()._parse_raw_value(event_value)
+        )
+
+        # If segment matches the last segment value, return None
+        if _segment_val == self.segment_val:
+            return None
+        
+        # Update the segment value inside self and return it
+        self.segment_val = _segment_val
+        return _segment_val
 
 
 
@@ -345,12 +404,17 @@ class DS4Gamepad:
         
         # Infinite loop of reading the event device file
         for event in self.event_device.read_loop():
+
             # Iterate over all of the input objects
             for input_obj in self.input_obj_lst:
+
                 # Check if the event type and code is the same as the object's type and code
                 if input_obj.is_type_and_code(event.type, event.code):
+
                     # Parse the raw value of the event
-                    obj_raw_value = input_obj.parse_raw_value(event.value)
+                    obj_raw_value = input_obj._parse_raw_value(event.value)
+
+                    # Only yield the object and raw value if the raw value is not None
                     if obj_raw_value is not None:
                         yield input_obj, obj_raw_value
 
@@ -379,7 +443,6 @@ class DS4Gamepad:
         This is an infinite loop!
         """
         for input_obj, obj_raw_value in self.yield_obj_and_raw_value():
-            # continue
             print(f'Name: {input_obj.name.ljust(15)}  -->  Value: {obj_raw_value}')
 
 
@@ -391,4 +454,8 @@ def test():
 
 
 if __name__ == '__main__':
-    test()
+    try:
+        test()
+
+    except KeyboardInterrupt:
+        print('\nExiting...')

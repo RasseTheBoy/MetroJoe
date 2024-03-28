@@ -7,6 +7,11 @@ from FastDebugger import fd
 
 
 
+class MotorDirectionError(Exception):
+    def __init__(self, message:str='Cannot change direction while the motor is running'):
+        super().__init__(message)
+
+
 
 class ModbusMotorController:
     def __init__(
@@ -43,6 +48,10 @@ class ModbusMotorController:
         self._speed_max_register = speed_max_register
         self._speed_register_address = speed_register_address
         self._direction_register_address = direction_register_address
+
+        # Set internal memory attributes
+        self._last_direction = 'forward'
+        self._last_speed = 0
 
         # Create the instrument object
         self._instrument_obj = MBInstrument(port, slave_address)
@@ -85,21 +94,52 @@ class ModbusMotorController:
         direction: Literal['forward', 'reverse']
             The direction to change to
         """
-        # Get the direction value from the direction map
-        direction_value = self.direction_map.get((direction, self._side), None) # type: ignore
+        if self._last_speed != 0:
+            raise MotorDirectionError
+
+        # Get the direction register value from the direction map
+        direction_reg_value = self.direction_map.get((direction, self._side), None) # type: ignore
 
         # Raise error if the direction value is None
-        if direction_value is None:
+        if direction_reg_value is None:
             raise ValueError(f'Invalid direction: {direction!r}')
 
         # Write the direction value to the register
         self._instrument_obj.write_register(
             self._direction_register_address,
-            direction_value,
+            direction_reg_value,
             functioncode=6
         )
 
+        self._last_direction = direction
+
         self.cprint(f'Direction changed to: {direction!r}')
+
+    
+    def _set_speed(self, speed_input:int):
+        """Set the motor speed
+        
+        Parameters:
+        -----------
+        speed_input: int
+            The speed input value
+        """
+        # Calcualte the speed value for the register
+        speed_register = int(speed_input * self._speed_max_register / self._speed_max_input)
+
+        # Write the speed value to the register
+        self._instrument_obj.write_register(
+            self._speed_register_address,
+            speed_register,
+            functioncode=6
+        )
+
+        # Save the last speed value
+        self._last_speed = speed_input
+
+        return speed_register
+
+        
 
 
     def drive_direction(self, direction:Literal['forward', 'reverse'], speed_input:int):
@@ -116,32 +156,25 @@ class ModbusMotorController:
         if speed_input > self._speed_max_input:
             raise ValueError(f'Speed input {speed_input} exceeds the maximum speed input {self._speed_max_input}')
 
-        # Change the direction
-        # TODO: Have a memory of the current direction and only change if it is different
-        self._change_direction(direction)
+        # Try chaning direction
+        if direction != self._last_direction:
+            try:
+                self._change_direction(direction)
+            except MotorDirectionError as e:
+                self.cprint(f'Error: {e}')
+                self.cprint('Stopping the motor speed')
+                self.stop_speed()
+                return
 
-        # Calcualte the speed value for the register
-        speed_register = int(speed_input * self._speed_max_register / self._speed_max_input)
-
-        # Write the speed value to the register
-        self._instrument_obj.write_register(
-            self._speed_register_address,
-            speed_register,
-            functioncode=6
-        )
-
-        self.cprint(f'Driven {direction} at speed: {speed_input}')
+        _speed_register = self._set_speed(speed_input)
+        
+        self.cprint(f'Driven {direction} at speed: {speed_input} ({_speed_register})')
 
 
     def stop_speed(self):
         """Stop the motor speed"""
-        self._instrument_obj.write_register(
-            self._speed_register_address,
-            0,
-            functioncode=6
-        )
-
-        self.cprint(f'Stopped the motor speed')
+        self._set_speed(0)
+        self.cprint(f'STOPPED THE MOTOR SPEED!')
 
 
 

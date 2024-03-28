@@ -1,4 +1,24 @@
 import rclpy
+from rclpy.node import Node
+
+
+class NodeBase(Node):
+    def __init__(self, node_name: str, **kwargs):
+        super().__init__(node_name, **kwargs)
+
+        self.log('Node initialized')
+
+    
+    def log(self, msg:str):
+        """Print a message with the class name
+        
+        Args:
+        -----
+        msg (str): The message to print"""
+        self.get_logger().info(f'{self.__class__.__name__} {msg}')
+
+
+
 
 def run_rclpy(func):
     """Automatically initialize, run and shutdown `rclpy`"""
@@ -17,9 +37,6 @@ def spin_node(node):
     """Spin the node"""
     rclpy.spin(node)
 
-    # Destroy the node explicitly
-    # (optional - otherwise it will be done automatically
-    # when the garbage collector destroys the node object)
     node.destroy_node()
     print('Node destroyed')
     rclpy.shutdown()
