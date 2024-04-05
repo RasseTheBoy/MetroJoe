@@ -79,5 +79,9 @@ Controls the ModBus motor controller.
 - `/drive_speed`
   - Type: [DriveSpeed](ros2_ws/src/metrojoe_interfaces/msg/DriveSpeed.msg)
     - string: direction
+      - Values: `forward`, `reverse`
+    - string: turn
+      - Values: `left`, `right`, `none`
     - int16: speed
-  - Test in terminal: `ros2 topic pub --once /drive_speed metrojoe_interfaces/msg/DriveSpeed "{direction: '<forward/reverse>', speed: <0-255>}"`
+      - Range: `0-255`
+  - Test in terminal: `ros2 topic pub --once /drive_speed metrojoe_interfaces/msg/DriveSpeed "{direction: '<value>', turn: '<none>', speed: <value>}"`

@@ -1,72 +1,35 @@
-from time import sleep
-from typing import Literal
+from metrojoe.modbus.modbus_base import ModbusBase
+from FastDebugger   import fd
+from typing         import Literal
+from time           import sleep
 
-
-from minimalmodbus import Instrument as MBInstrument, serial as MBSerial
-from FastDebugger import fd
+import plotly.express as px
 
 
 
 class MotorDirectionError(Exception):
+    """Error raised when the motor direction cannot be changed"""
     def __init__(self, message:str='Cannot change direction while the motor is running'):
         super().__init__(message)
 
 
 
-class ModbusMotorController:
+class ModbusMotorController(ModbusBase):
     def __init__(
             self,
             slave_address:int,
             side:Literal['left', 'right'],
-            port:str = '/dev/ttyUSB0',
-            baudrate:int = 19200,
-            parity:Literal['even', 'none'] = 'even',
-            speed_max_input:int = 255,
-            speed_max_register:int = 1000,
-            speed_register_address:int = 1,
-            direction_register_address:int =3,
-            pwm_register_address:int = 10
+            position:Literal['front', 'middle', 'back'],
         ):
-        def _get_parity() -> Literal['E', 'N']:
-            """Get the parity value for the serial communication
-            
-            Returns:
-            --------
-            Literal['E', 'N']: The parity value"""
-            match parity:
-                case 'even':
-                    return MBSerial.PARITY_EVEN
-                case 'none':
-                    return MBSerial.PARITY_NONE
-                case _:
-                    raise ValueError(f'Invalid parity: {parity!r}')
-                
 
-        # Set the class attributes
-        self._slave_address = slave_address
-        self._side = side
-        self._speed_max_input = speed_max_input
-        self._speed_max_register = speed_max_register
-        self._speed_register_address = speed_register_address
-        self._direction_register_address = direction_register_address
-        self._pwm_register_address = pwm_register_address
+
+        self.side = side
+        self.position = position
+
 
         # Set internal memory attributes
-        self._last_direction = 'forward'
-        self._last_speed = 0
-
-        # Create the instrument object
-        self._instrument_obj = MBInstrument(port, slave_address)
-
-        # Check if the serial port exists
-        if self._instrument_obj.serial is None:
-            raise ValueError(f'Serial port {port!r} not found')
-
-        self.cprint(f'Connected to controller')
-
-        # Update the instrument object
-        self._instrument_obj.serial.baudrate = baudrate
-        self._instrument_obj.serial.parity = _get_parity()
+        self.last_direction = 'forward'
+        self.last_speed = 0
 
         # Define the direction map
         self.direction_map = {
@@ -75,6 +38,11 @@ class ModbusMotorController:
             ('reverse', 'left'): 0,
             ('reverse', 'right'): 1,
         }
+
+        # Set the motor to a 'default' state
+        self.cprint('Setting the motor to a default state')
+        self._change_direction('forward')
+        self.stop_speed()
 
 
     def cprint(self, msg:str):
@@ -85,12 +53,7 @@ class ModbusMotorController:
         msg: str
             The message to print
         """
-        print(f'[{self._slave_address}] <{self._side!r}> {msg}')
-
-
-    def get_pwm_reg_val(self):
-        """Check the pwm register value"""
-        return self._instrument_obj.read_register(self._pwm_register_address, functioncode=3)
+        super().cprint(f'<{self.side!r} | {self.position!r}> {msg}')
 
 
     def _change_direction(self, direction:Literal['forward', 'reverse']):
@@ -101,15 +64,15 @@ class ModbusMotorController:
         direction: Literal['forward', 'reverse']
             The direction to change to
         """
-        # TODO: Check if the motor is running from the motor controllers register (PWM?)
-        # TODO: Direction can be changed only if the motor is slow enough (doesn't need to be stopped)
-        if self._last_speed != 0:
+        # TODO: Check if the motor is running from the motor controllers register (PWM/freq?)
+        # TODO: Direction can be changed only if the motor is slow enough (doesn't need to be stopped)(?)
+
+        # Check if the trigger value has been set back to 0 before changing the direction
+        if self.last_speed != 0:
             raise MotorDirectionError('Last speed is not 0!')
-        elif self.get_pwm_reg_val() != 0:
-            raise MotorDirectionError('Motor PWM is not 0!')
 
         # Get the direction register value from the direction map
-        direction_reg_value = self.direction_map.get((direction, self._side), None) # type: ignore
+        direction_reg_value = self.direction_map.get((direction, self.side), None) # type: ignore
 
         # Raise error if the direction value is None
         if direction_reg_value is None:
@@ -122,35 +85,9 @@ class ModbusMotorController:
             functioncode=6
         )
 
-        self._last_direction = direction
+        self.last_direction = direction
 
         self.cprint(f'Direction changed to: {direction!r}')
-
-    
-    def _set_speed(self, speed_input:int):
-        """Set the motor speed
-        
-        Parameters:
-        -----------
-        speed_input: int
-            The speed input value
-        """
-        # Calcualte the speed value for the register
-        speed_register = int(speed_input * self._speed_max_register / self._speed_max_input)
-
-        # Write the speed value to the register
-        self._instrument_obj.write_register(
-            self._speed_register_address,
-            speed_register,
-            functioncode=6
-        )
-
-        # Save the last speed value
-        self._last_speed = speed_input
-
-        return speed_register
-
-        
 
 
     def drive_direction(self, direction:Literal['forward', 'reverse'], speed_input:int):
@@ -168,7 +105,7 @@ class ModbusMotorController:
             raise ValueError(f'Speed input {speed_input} exceeds the maximum speed input {self._speed_max_input}')
 
         # Try chaning direction
-        if direction != self._last_direction:
+        if direction != self.last_direction:
             try:
                 self._change_direction(direction)
             except MotorDirectionError as e:
@@ -186,14 +123,92 @@ class ModbusMotorController:
     def stop_speed(self):
         """Stop the motor speed"""
         self._set_speed(0)
-        self.cprint(f'STOPPED THE MOTOR SPEED!')
+        self.cprint(f'STOPPED THE MOTOR SPEED! -> Set to 0')
+
+
+    def get_motor_pulse_frequency(self) -> int:
+        """Get the motor pulse frequency
+        
+        Returns:
+        --------
+        int: The motor pulse frequency
+        """
+        return self._instrument_obj.read_register(self.MB_freq_data_address, functioncode=4) # type:ignore
+    
+
+    def get_motor_pwm(self) -> int:
+        """Get the motor pwm value
+        
+        Returns:
+        --------
+        int: The motor pwm value
+        """
+        return self._instrument_obj.read_register(self.MB_pwm_data_address, functioncode=4) # type:ignore
+    
+
+    def plot_motor_value(self, plot_value:Literal['pwm', 'freq'], loop_range:int=10, sleep_time_seconds:float=0.5, save_file:bool=False):
+        """Plot the motor value
+        
+        Parameters:
+        -----------
+        plot_value: Literal['pwm', 'freq']
+            The value to plot
+        loop_range: int
+            The number of iterations to plot
+        sleep_time_seconds: float
+            The sleep time between each iteration
+        """
+        def get_motor_value() -> int:
+            match plot_value:
+                case 'pwm':
+                    return self.get_motor_pwm()
+                
+                case 'freq':
+                    return self.get_motor_pulse_frequency()
+                
+                case _:
+                    raise ValueError(f'Invalid plot value: {plot_value!r}')
+
+        motor_value_lst =  []
+
+        # Create a list of epoch times for plotting
+        epoch_time_lst = [indx*sleep_time_seconds for indx in range(loop_range)]
+
+        for indx in range(loop_range):
+            # Read the motor pulse frequency and save it to the list
+            motor_value = get_motor_value()
+            motor_value_lst.append(motor_value)
+            self.cprint(f'<{indx}>: {motor_value}')
+
+            # Skip sleep if last index
+            if indx != loop_range - 1:
+                sleep(sleep_time_seconds)
+
+        # Create a plotly figure
+        fig = px.line(
+            x = epoch_time_lst,
+            y = motor_value_lst,
+            title = f'Motor {plot_value.capitalize()} Plot',
+            labels = {'x': 'Time (s)', 'y': f'Motor {plot_value}'}
+        )
+
+        # Optionally save the plot to a file
+        if save_file:
+            fig.write_html(f'motor_{plot_value}_plot.html', auto_open=True)
+
+        else:
+            fig.show()
+
+
+
 
 
 
 if __name__ == '__main__':
-    motor_controller_1 = ModbusMotorController(1, 'left')
+    motor_controller_test = ModbusMotorController(2, 'left', 'front')
 
-    motor_controller_1.drive_direction('forward', 100)
+    motor_controller_test.drive_direction('forward', 255)
+    motor_controller_test.plot_motor_value('freq', loop_range=10, sleep_time_seconds=0.5, save_file=True)
     sleep(3)
-    motor_controller_1.stop_speed()
+    motor_controller_test.stop_speed()
 

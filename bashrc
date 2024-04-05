@@ -1,10 +1,5 @@
 echo "ROS2 workspace: Sourcing bash files and setting aliases"
 
-source /opt/ros/humble/setup.bash
-source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
-
-echo "ROS2 workspace: Sourcing complete"
-
 # Install Setup Bash
 alias sis='. install/setup.bash'
 
@@ -20,5 +15,10 @@ alias cbm='colcon build --symlink-install --packages-select metrojoe && sis'
 # Colcon Build (Metrojoe) Interfaces
 alias cbi='colcon build --symlink-install --packages-select metrojoe_interfaces && sis'
 
-
 echo "ROS2 workspace: Aliases set"
+
+source /opt/ros/humble/setup.bash
+source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+sis
+
+echo "ROS2 workspace: Sourcing complete"

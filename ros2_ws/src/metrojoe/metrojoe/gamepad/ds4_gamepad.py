@@ -2,6 +2,7 @@ from functools import cache
 from typing         import Any, Generator
 from evdev          import InputDevice
 from FastDebugger import fd
+from os import listdir
 
 
 class NoDeviceFoundError(Exception):
@@ -311,7 +312,7 @@ class Trigger(InputBase):
 
 class DS4Gamepad:
     """The Gamepad class for the gamepad object"""
-    def __init__(self, joystick_deadzone:float=0.05, max_event_num:int=10) -> None:
+    def __init__(self, joystick_deadzone:float=0.05) -> None:
         """Initializes the Gamepad class
         
         Parameters:
@@ -321,9 +322,9 @@ class DS4Gamepad:
         """
         def _find_compatible_devide():
             """Finds the compatible device for the gamepad object"""
-            for i in range(max_event_num):
+            for event_file_name in listdir('/dev/input/'):
                 try:
-                    return InputDevice(f'/dev/input/event{i}')
+                    return InputDevice(f'/dev/input/{event_file_name}')
                 except (FileNotFoundError, PermissionError):
                     pass
 
@@ -443,8 +444,7 @@ class DS4Gamepad:
         This is an infinite loop!
         """
         for input_obj, obj_raw_value in self.yield_obj_and_raw_value():
-            fd(input_obj.class_name)
-            # print(f'Name: {input_obj.name.ljust(15)}  -->  Value: {obj_raw_value}')
+            print(f'Name: {input_obj.name.ljust(15)}  -->  Value: {obj_raw_value}')
 
 
 

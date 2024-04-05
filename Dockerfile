@@ -29,7 +29,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libmodbus-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && pip3 install minimalmodbus FastDebugger evdev setuptools==58.2.0
+    && pip3 install minimalmodbus FastDebugger evdev setuptools==58.2.0 plotly pandas
 # setuptools==58.2.0 is the latest version to work with ros2 python packages without any warnings
 
 # Set up sudo for the user
