@@ -3,7 +3,7 @@ from FastDebugger   import fd
 from typing         import Literal
 from time           import sleep
 
-import plotly.express as px
+# import plotly.express as px
 
 
 
@@ -21,11 +21,8 @@ class ModbusMotorController(ModbusBase):
             side:Literal['left', 'right'],
             position:Literal['front', 'middle', 'back'],
         ):
-
-
         self.side = side
         self.position = position
-
 
         # Set internal memory attributes
         self.last_direction = 'forward'
@@ -38,6 +35,8 @@ class ModbusMotorController(ModbusBase):
             ('reverse', 'left'): 0,
             ('reverse', 'right'): 1,
         }
+
+        super().__init__(slave_address=slave_address)
 
         # Set the motor to a 'default' state
         self.cprint('Setting the motor to a default state')
@@ -53,7 +52,7 @@ class ModbusMotorController(ModbusBase):
         msg: str
             The message to print
         """
-        super().cprint(f'<{self.side!r} | {self.position!r}> {msg}')
+        super().cprint(f'<{self.side}|{self.position}> {msg}')
 
 
     def _change_direction(self, direction:Literal['forward', 'reverse']):
@@ -185,19 +184,19 @@ class ModbusMotorController(ModbusBase):
                 sleep(sleep_time_seconds)
 
         # Create a plotly figure
-        fig = px.line(
-            x = epoch_time_lst,
-            y = motor_value_lst,
-            title = f'Motor {plot_value.capitalize()} Plot',
-            labels = {'x': 'Time (s)', 'y': f'Motor {plot_value}'}
-        )
+        # fig = px.line(
+        #     x = epoch_time_lst,
+        #     y = motor_value_lst,
+        #     title = f'Motor {plot_value.capitalize()} Plot',
+        #     labels = {'x': 'Time (s)', 'y': f'Motor {plot_value}'}
+        # )
 
-        # Optionally save the plot to a file
-        if save_file:
-            fig.write_html(f'motor_{plot_value}_plot.html', auto_open=True)
+        # # Optionally save the plot to a file
+        # if save_file:
+        #     fig.write_html(f'motor_{plot_value}_plot.html', auto_open=True)
 
-        else:
-            fig.show()
+        # else:
+        #     fig.show()
 
 
 
@@ -208,7 +207,7 @@ if __name__ == '__main__':
     motor_controller_test = ModbusMotorController(2, 'left', 'front')
 
     motor_controller_test.drive_direction('forward', 255)
-    motor_controller_test.plot_motor_value('freq', loop_range=10, sleep_time_seconds=0.5, save_file=True)
+    # motor_controller_test.plot_motor_value('freq', loop_range=10, sleep_time_seconds=0.5, save_file=True)
     sleep(3)
     motor_controller_test.stop_speed()
 
