@@ -16,7 +16,7 @@ A [Metropolia Garage](https://www.metropolia.fi/fi/tutkimus-kehitys-ja-innovaati
 
 ## Starting the `Metrojoe` image
 
-**It is recommender to run the image in a [devcontainer](.devcontainer/devcontainer.json) for development.**
+**It is highly recommender to run the image in a [devcontainer](.devcontainer/devcontainer.json) for development.**
 
 To run the code from a terminal, use the following command:
 
@@ -68,7 +68,7 @@ Reads the gamepad inputs and publishes them to a topic.
   - Type: [GamepadInput](ros2_ws/src/metrojoe_interfaces/msg/GamepadInput.msg)
     - string: name
     - int16: value
-    - Test in terminal: `ros2 topic echo /gamepad_trigger`
+  - Test in terminal: `ros2 topic echo /gamepad_trigger`
 
 ### `modbus_motor_controller` (W.I.P.)
 

@@ -3,7 +3,7 @@ from FastDebugger   import fd
 from typing         import Literal
 from time           import sleep
 
-# import plotly.express as px
+import plotly.express as px
 
 
 
@@ -37,29 +37,33 @@ class ModbusMotorController(ModbusBase):
         }
 
         super().__init__(slave_address=slave_address)
-
-        # Set the motor to a 'default' state
-        self.cprint('Setting the motor to a default state')
-        self._change_direction('forward')
-        self.stop_speed()
+        self.set_default_state()
 
 
     def cprint(self, msg:str):
         """Print a message with the class name
         
-        Parameters:
-        -----------
+        Parameters
+        ----------
         msg: str
             The message to print
         """
         super().cprint(f'<{self.side}|{self.position}> {msg}')
 
+    
+    def set_default_state(self):
+        """Set the device to its default state/position"""
+        self.cprint('Setting the default state')
+        self.stop_speed()
+        self.change_direction('forward')
+        
 
-    def _change_direction(self, direction:Literal['forward', 'reverse']):
+
+    def change_direction(self, direction:Literal['forward', 'reverse']):
         """Change the motor direction
         
-        Parameters:
-        -----------
+        Parameters
+        ----------
         direction: Literal['forward', 'reverse']
             The direction to change to
         """
@@ -76,12 +80,11 @@ class ModbusMotorController(ModbusBase):
         # Raise error if the direction value is None
         if direction_reg_value is None:
             raise ValueError(f'Invalid direction: {direction!r}')
-
-        # Write the direction value to the register
-        self._instrument_obj.write_register(
-            self._direction_register_address,
-            direction_reg_value,
-            functioncode=6
+        
+        self.write_register(
+            register_address = self._direction_register_address,
+            value = direction_reg_value,
+            functioncode = 6
         )
 
         self.last_direction = direction
@@ -92,8 +95,8 @@ class ModbusMotorController(ModbusBase):
     def drive_direction(self, direction:Literal['forward', 'reverse'], speed_input:int):
         """Drive the motor in a specific direction
         
-        Parameters:
-        -----------
+        Parameters
+        ----------
         direction: Literal['forward', 'reverse']
             The direction to drive the motor
         speed_input: int
@@ -106,12 +109,9 @@ class ModbusMotorController(ModbusBase):
         # Try chaning direction
         if direction != self.last_direction:
             try:
-                self._change_direction(direction)
+                self.change_direction(direction)
             except MotorDirectionError as e:
                 self.cprint(f'Error: {e}')
-                # TODO: Should the motor be stopped if both direction buttons are pressed?
-                # self.cprint('Stopping the motor speed')
-                # self.stop_speed()
                 return
 
         _speed_register = self._set_speed(speed_input)
@@ -128,28 +128,33 @@ class ModbusMotorController(ModbusBase):
     def get_motor_pulse_frequency(self) -> int:
         """Get the motor pulse frequency
         
-        Returns:
-        --------
+        Returns
+        -------
         int: The motor pulse frequency
         """
-        return self._instrument_obj.read_register(self.MB_freq_data_address, functioncode=4) # type:ignore
-    
+        return self.read_register(
+            register_address = self.MB_freq_data_address,
+            functioncode = 4
+        )
 
     def get_motor_pwm(self) -> int:
         """Get the motor pwm value
         
-        Returns:
-        --------
+        Returns
+        -------
         int: The motor pwm value
         """
-        return self._instrument_obj.read_register(self.MB_pwm_data_address, functioncode=4) # type:ignore
+        return self.read_register(
+            register_address = self.MB_pwm_data_address,
+            functioncode = 4
+        )
     
 
     def plot_motor_value(self, plot_value:Literal['pwm', 'freq'], loop_range:int=10, sleep_time_seconds:float=0.5, save_file:bool=False):
         """Plot the motor value
         
-        Parameters:
-        -----------
+        Parameters
+        ----------
         plot_value: Literal['pwm', 'freq']
             The value to plot
         loop_range: int
@@ -184,19 +189,19 @@ class ModbusMotorController(ModbusBase):
                 sleep(sleep_time_seconds)
 
         # Create a plotly figure
-        # fig = px.line(
-        #     x = epoch_time_lst,
-        #     y = motor_value_lst,
-        #     title = f'Motor {plot_value.capitalize()} Plot',
-        #     labels = {'x': 'Time (s)', 'y': f'Motor {plot_value}'}
-        # )
+        fig = px.line(
+            x = epoch_time_lst,
+            y = motor_value_lst,
+            title = f'Motor {plot_value.capitalize()} Plot',
+            labels = {'x': 'Time (s)', 'y': f'Motor {plot_value}'}
+        )
 
-        # # Optionally save the plot to a file
-        # if save_file:
-        #     fig.write_html(f'motor_{plot_value}_plot.html', auto_open=True)
+        # Optionally save the plot to a file
+        if save_file:
+            fig.write_html(f'motor_{plot_value}_plot.html', auto_open=True)
 
-        # else:
-        #     fig.show()
+        else:
+            fig.show()
 
 
 
@@ -204,10 +209,14 @@ class ModbusMotorController(ModbusBase):
 
 
 if __name__ == '__main__':
-    motor_controller_test = ModbusMotorController(2, 'left', 'front')
+    try:
+        motor_controller_test = ModbusMotorController(2, 'left', 'front')
 
-    motor_controller_test.drive_direction('forward', 255)
-    # motor_controller_test.plot_motor_value('freq', loop_range=10, sleep_time_seconds=0.5, save_file=True)
-    sleep(3)
-    motor_controller_test.stop_speed()
+        motor_controller_test.drive_direction('forward', 255)
+        # motor_controller_test.plot_motor_value('freq', loop_range=10, sleep_time_seconds=0.5, save_file=True)
+        sleep(3)
+        motor_controller_test.stop_speed()
+
+    except KeyboardInterrupt:
+        print('\nKeyboardInterrupt')
 
