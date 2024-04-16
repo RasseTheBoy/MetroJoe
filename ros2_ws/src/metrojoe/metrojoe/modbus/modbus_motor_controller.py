@@ -25,7 +25,7 @@ class ModbusMotorController(ModbusBase):
         self.position = position
 
         # Set internal memory attributes
-        self.last_direction = 'forward'
+        self.last_direction = None
         self.last_speed = 0
 
         # Define the direction map
@@ -37,7 +37,6 @@ class ModbusMotorController(ModbusBase):
         }
 
         super().__init__(slave_address=slave_address)
-        self.set_default_state()
 
 
     def cprint(self, msg:str):
@@ -70,8 +69,12 @@ class ModbusMotorController(ModbusBase):
         # TODO: Check if the motor is running from the motor controllers register (PWM/freq?)
         # TODO: Direction can be changed only if the motor is slow enough (doesn't need to be stopped)(?)
 
+        # Check if the direction is the same as the last direction
+        if direction == self.last_direction:
+            return
+
         # Check if the trigger value has been set back to 0 before changing the direction
-        if self.last_speed != 0:
+        elif self.last_speed != 0:
             raise MotorDirectionError('Last speed is not 0!')
 
         # Get the direction register value from the direction map
@@ -114,14 +117,14 @@ class ModbusMotorController(ModbusBase):
                 self.cprint(f'Error: {e}')
                 return
 
-        _speed_register = self._set_speed(speed_input)
+        _speed_register = self._reg_set_speed(speed_input)
         
         self.cprint(f'Drive {direction!r} at speed: {speed_input} ({_speed_register})')
 
 
     def stop_speed(self):
         """Stop the motor speed"""
-        self._set_speed(0)
+        self._reg_set_speed(0)
         self.cprint(f'STOPPED THE MOTOR SPEED! -> Set to 0')
 
 
@@ -210,11 +213,11 @@ class ModbusMotorController(ModbusBase):
 
 if __name__ == '__main__':
     try:
-        motor_controller_test = ModbusMotorController(2, 'left', 'front')
+        motor_controller_test = ModbusMotorController(1, 'left', 'front')
 
         motor_controller_test.drive_direction('forward', 255)
         # motor_controller_test.plot_motor_value('freq', loop_range=10, sleep_time_seconds=0.5, save_file=True)
-        sleep(3)
+        sleep(5)
         motor_controller_test.stop_speed()
 
     except KeyboardInterrupt:

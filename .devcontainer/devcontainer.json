@@ -5,20 +5,37 @@
     "privileged": true,
     "mounts": [
         "source=/dev/input,target=/dev/input,type=bind,consistency=cached",
-        "source=${localWorkspaceFolder}/ros2_ws,target=/ros2_ws,type=bind,consistency=cached"
+        "source=${localWorkspaceFolder}/ros2_ws,target=/ros2_ws,type=bind,consistency=cached",
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached"
     ],
-    "runArgs": ["--device=/dev/ttyUSB0"],
+    "runArgs": [
+        "--name", "ros2_devcontainer",
+        "--device=/dev/ttyUSB0",
+        "--device=/dev/gpiochip*",
+        "--device=/dev/i2c*",
+        "--net=host",
+        "-e", "DISPLAY=${env:DISPLAY}"
+    ],
+    "containerEnv": {
+        "DISPLAY": "unix:0",
+        "ROS_AUTOMATIC_DISCOVERY_RANGE": "LOCALHOST",
+        "ROS_DOMAIN_ID": "42"
+    },
     "customizations": {
         "vscode": {
             "extensions": [
                 "ms-python.python",
                 "Gruntfuggly.todo-tree",
                 "alefragnani.Bookmarks",
-                "ms-iot.vscode-ros"
+                "ms-iot.vscode-ros",
+                "ms-vscode.cmake-tools"
             ],
             "settings": {
                 "terminal.integrated.defaultProfile.linux": "bash",
-                "python.analysis.extraPaths": ["/opt/ros/humble/local/lib/python3.10/dist-packages"]
+                "python.analysis.extraPaths": [
+                    "/opt/ros/humble/local/lib/python3.10/dist-packages",
+                    "/ros2_ws/install/metrojoe_interfaces/local/lib/python3.10/dist-packages"
+                ]
             }
         }
     }

@@ -8,12 +8,20 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
+find_package(std_msgs REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/DriveSpeed.msg"
   "msg/GamepadInput.msg"
+  "msg/BNO055/ThreeDimensional.msg"
+  "msg/BNO055/Temperature.msg"
+  "msg/BNO055/Quaternion.msg"
+
+  DEPENDENCIES std_msgs
 )
 
-ament_export_dependencies(rosidl_default_runtime)
+ament_export_dependencies(
+  rosidl_default_runtime
+)
 
 ament_package()

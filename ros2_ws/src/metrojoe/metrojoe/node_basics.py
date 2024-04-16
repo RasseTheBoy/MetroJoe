@@ -1,3 +1,4 @@
+from typing import Any
 import rclpy
 from rclpy.node import Node
 
@@ -12,10 +13,26 @@ class NodeBase(Node):
     def log(self, msg:str):
         """Print a message with the class name
         
-        Args:
-        -----
+        Parameter
+        ---------
         msg (str): The message to print"""
-        self.get_logger().info(f'{self.__class__.__name__} {msg}')
+        self.get_logger().info(msg)
+        # self.get_logger().info(f'{self.__class__.__name__} {msg}')
+
+
+    def declare_and_get_parameter(self, parameter_name:str, default_value) -> Any:
+        """Declare and get a parameter
+        
+        Parameter
+        ---------
+        parameter_name (str): The name of the parameter
+        default_value (any): The default value of the parameter
+        
+        Returns
+        -------
+        The value of the parameter"""
+        self.declare_parameter(parameter_name, default_value)
+        return self.get_parameter(parameter_name).value
 
 
 

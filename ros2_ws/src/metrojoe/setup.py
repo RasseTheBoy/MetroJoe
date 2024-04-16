@@ -29,11 +29,12 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            f'main = '+ module_from_file('main'),
-            f'min_talker = '+ module_from_file('minimal_test.minimal_publisher'),
-            f'min_listener = '+ module_from_file('minimal_test.minimal_subscriber'),
-            f'gamepad_publisher = '+ module_from_file('gamepad.ds4_gamepad_node'),
+            f'main ='+ module_from_file('main'),
+            f'min_talker ='+ module_from_file('minimal_test.minimal_publisher'),
+            f'min_listener ='+ module_from_file('minimal_test.minimal_subscriber'),
+            f'gamepad_publisher ='+ module_from_file('gamepad.ds4_gamepad_node'),
             f'modbus_motor_controller =' + module_from_file('modbus.modbus_motor_controller_node'),
+            f'bno055_publisher =' + module_from_file('bno055.bno055_node'),
         ]
     },
 )

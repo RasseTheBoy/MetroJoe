@@ -148,8 +148,8 @@ class ModbusBase(ABC):
 
 
 
-    def _set_speed(self, speed_input:int):
-        """Set the motor speed
+    def _reg_set_speed(self, speed_input:int):
+        """Writes the motor speed in the register
         
         Parameters
         ----------
@@ -157,17 +157,17 @@ class ModbusBase(ABC):
             The speed input value
         """
         # Calcualte the speed value for the register
-        speed_register = int(speed_input * self._speed_max_register / self._speed_max_input)
+        speed_register_val = int(speed_input * self._speed_max_register / self._speed_max_input)
 
         # Write the speed value to the register
         self._instrument_obj.write_register(
             self._speed_register_address,
-            speed_register,
+            speed_register_val,
             functioncode=6
         )
 
         # Save the last speed value
         self.last_speed = speed_input
 
-        return speed_register
+        return speed_register_val
 

@@ -1,7 +1,8 @@
 
 from FastDebugger import fd
-from metrojoe_interfaces.msg import DriveSpeed, GamepadInput # type: ignore
+from metrojoe_interfaces.msg import DriveSpeed, GamepadInput, ThreeDimensional, Quaternion
 from metrojoe.node_basics import NodeBase, spin_node, run_rclpy
+from message_filters import TimeSynchronizer, Subscriber, ApproximateTimeSynchronizer
 
 
 class MainBrain(NodeBase):
@@ -23,6 +24,19 @@ class MainBrain(NodeBase):
             'drive_speed',
             10
         )
+
+        ApproximateTimeSynchronizer(
+            [
+                Subscriber(self, ThreeDimensional, 'acceleration'),
+                Subscriber(self, Quaternion, 'quaternion'),
+            ],
+            10,
+            0.1
+        ).registerCallback(self.acceleration_gravity_callback)
+
+    def acceleration_gravity_callback(self, acceleration:ThreeDimensional, quaternion:Quaternion):
+        self.log(f'Acceleration: {acceleration.x}')
+        self.log(f'Quaternion: {quaternion.w}')
 
     
     def gamepad_trigger_callback(self, msg:GamepadInput):

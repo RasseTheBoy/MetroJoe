@@ -26,8 +26,10 @@ class DS4GamepadNode(NodeBase):
             10
         )
 
-        # Create a timer to publish the button inputs
-        self.timer = self.create_timer(0.5, self.publish_button_inputs)
+        self.publish_button_inputs() # TODO: Check if this works; Remove if it doesn't
+
+        # # Create a timer to publish the button inputs
+        # self.timer = self.create_timer(0.5, self.publish_button_inputs)
 
     
     def publish_button_inputs(self):

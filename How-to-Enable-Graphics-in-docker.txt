@@ -1,0 +1,22 @@
+Open terminal (In jetson, not in docker image)
+Type:
+
+xhost local:root
+
+Afterwards just run docker image in devcontainer and use as normal
+
+(This is not a secure way to do it but it works)
+X11 has been setup in the docker. rqt_graph and rviz2 are installed
+
+Applications will open outside of docker in jetson but work as expected. (Probably).
+
+TODO: Prune package install for future so we dont install a huge amount of stuff
+TODO: Forward network settings to docker so we can connect it online
+TODO: Check if X11 needs extra stuff to work in Windows enviroment (besides x11 server)
+
+Random cool stuff i found: 
+
+https://github.com/dusty-nv/jetson-containers
+https://www.kevsrobots.com/learn/learn_ros/00_intro.html
+
+-Samuli

@@ -2,7 +2,7 @@ import minimalmodbus
 
 def main():
     # Define the Modbus slave address and port
-    SLAVE_ADDRESS = 1  # Replace with your Modbus slave address
+    SLAVE_ADDRESS = 2  # Replace with your Modbus slave address
     PORT = '/dev/ttyUSB0'  # Replace with your serial port
 
     # Create a minimalmodbus instrument instance
@@ -15,7 +15,7 @@ def main():
     instrument.serial.baudrate = 19200
     instrument.serial.bytesize = 8
     instrument.serial.parity = minimalmodbus.serial.PARITY_EVEN
-    instrument.serial.stopbits = 1
+    instrument.serial.stopbits = 2
     instrument.serial.timeout = 0.05  # Timeout in seconds
 
     # Function to read a holding register
